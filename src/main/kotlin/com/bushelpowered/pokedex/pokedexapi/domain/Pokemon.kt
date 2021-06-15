@@ -1,10 +1,9 @@
-package com.bushelpowered.pokedex.pokedexapi.Domain
+package com.bushelpowered.pokedex.pokedexapi.domain
 
-import com.bushelpowered.pokedex.pokedexapi.Persistence.Entities.PokemonEntity
-import javax.persistence.*
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
 
 data class Pokemon (
-        val id: Int? = null,   // Int? allows id to be nullable, and '= null' sets the default value to null
+        val id: Int = 0,   // Int? allows id to be nullable, and '= null' sets the default value to null
         val name: String,
         val types: List<Type>,
         val height: Double,

@@ -27,6 +27,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.liquibase:liquibase-core")
+	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.1")
 	liquibaseRuntime("ch.qos.logback:logback-classic:1.2.3")
 	liquibaseRuntime("ch.qos.logback:logback-core:1.2.3")
 	liquibaseRuntime("org.mariadb.jdbc:mariadb-java-client:2.7.1")
@@ -42,6 +43,35 @@ tasks.withType<KotlinCompile> {
 		jvmTarget = "1.8"
 	}
 }
+this.loadProperties()
+
+fun loadProperties() {
+	val environment = if (hasProperty("env"))
+		property("env").toString()
+	else "local"
+
+	val configFile = when (environment) {
+		"dev", "qa", "uat" -> file("config.remote.groovy")
+		else -> file("config.groovy")
+	}
+
+	project.extra["config"] = groovy.util.ConfigSlurper(environment).parse(configFile.readText())
+}
+
+liquibase {
+	val config = (rootProject.extra["config"] as groovy.util.ConfigObject).flatten()
+
+	activities.register("main") {
+		this.arguments = mapOf(
+				"logLevel" to "info",
+				"changeLogFile" to config["spring.datasource.changelog"],
+				"url" to config["spring.datasource.url"],
+				"username" to config["spring.datasource.username"],
+				"password" to config["spring.datasource.password"]
+		)
+	}
+}
+
 
 tasks.withType<Test> {
 	useJUnitPlatform()

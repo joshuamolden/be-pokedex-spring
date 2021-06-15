@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  pokemon_db_local:
+    container_name: pokemon_db_local
+    image: library/mariadb:10.5.10
+    ports:
+      - 13306:3306
+    environment:
+      MYSQL_DATABASE: PokemonDB
+      MYSQL_USER: pokemon_admin
+      MYSQL_PASSWORD: CatchEmAll!
+      MYSQL_ROOT_PASSWORD: CatchEmALl!root

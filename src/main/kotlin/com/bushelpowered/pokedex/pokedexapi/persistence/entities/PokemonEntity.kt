@@ -1,6 +1,6 @@
-package com.bushelpowered.pokedex.pokedexapi.Persistence.Entities
+package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
-import com.bushelpowered.pokedex.pokedexapi.Domain.*
+import com.bushelpowered.pokedex.pokedexapi.domain.*
 import javax.persistence.*
 
 @Table(name = "Pokemon")
@@ -8,7 +8,7 @@ import javax.persistence.*
 data class PokemonEntity (
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Int? = null,
+        val id: Int = 0,
         val name: String,
         @ManyToMany
         @JoinTable(

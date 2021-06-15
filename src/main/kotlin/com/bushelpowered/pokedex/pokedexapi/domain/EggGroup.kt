@@ -1,6 +1,6 @@
-package com.bushelpowered.pokedex.pokedexapi.Domain
+package com.bushelpowered.pokedex.pokedexapi.domain
 
-import com.bushelpowered.pokedex.pokedexapi.Persistence.Entities.EggGroupEntity
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
 
 data class EggGroup (
         val name: String

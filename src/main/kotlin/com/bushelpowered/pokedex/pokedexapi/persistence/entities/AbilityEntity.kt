@@ -1,6 +1,6 @@
-package com.bushelpowered.pokedex.pokedexapi.Persistence.Entities
+package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
-import com.bushelpowered.pokedex.pokedexapi.Domain.Ability
+import com.bushelpowered.pokedex.pokedexapi.domain.Ability
 import javax.persistence.*
 
 @Table(name = "Ability")

@@ -1,4 +1,4 @@
-package com.bushelpowered.pokedex.pokedexapi.Domain
+package com.bushelpowered.pokedex.pokedexapi.domain
 
 data class Stats (
         val hp: Int,
