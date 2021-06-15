@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="create-egg-group-table" author="jmolden">
+        <createTable tableName="egg_group">
+            <column name="id" type="Int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(30)">
+            </column>
+        </createTable>
+        <createIndex tableName="egg_group" indexName="id_index" unique="true">
+            <column name="id" />
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
