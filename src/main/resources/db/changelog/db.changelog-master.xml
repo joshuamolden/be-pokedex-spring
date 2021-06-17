@@ -9,9 +9,12 @@
     <property name="type.uuid" value="binary(16)" />
 
     <include relativeToChangelogFile="true" file="/actions/create-pokemon-table.xml"/> <!-- 1 -->
-    <include relativeToChangelogFile="true" file="/actions/create-stats-table.xml"/> <!-- 2 -->
-    <include relativeToChangelogFile="true" file="/actions/create-ability-table.xml" /> <!-- 3 -->
-    <include relativeToChangelogFile="true" file="/actions/create-type-table.xml" /> <!-- 4 -->
-    <include relativeToChangelogFile="true" file="/actions/create-egg-group-table.xml" /> <!-- 5 -->
+    <include relativeToChangelogFile="true" file="/actions/create-abilities-table.xml" /> <!-- 2 -->
+    <include relativeToChangelogFile="true" file="/actions/create-types-table.xml" /> <!-- 3 -->
+    <include relativeToChangelogFile="true" file="/actions/create-egg-groups-table.xml" /> <!-- 4 -->
+    <include relativeToChangelogFile="true" file="/actions/create-stats-table.xml" /> <!-- 5 -->
+    <include relativeToChangelogFile="true" file="/actions/create-pokemon-egg-groups-join-table.xml" /> <!-- 6 -->
+    <include relativeToChangelogFile="true" file="/actions/create-pokemon-abilities-join-table.xml" /> <!-- 7 -->
+    <include relativeToChangelogFile="true" file="/actions/create-pokemon-types-join-table.xml" /> <!-- 8 -->
 
 </databaseChangeLog>

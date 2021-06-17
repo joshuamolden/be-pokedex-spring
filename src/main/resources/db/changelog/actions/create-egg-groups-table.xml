@@ -6,17 +6,17 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
-    <changeSet id="create-type-table" author="jmolden">
-        <createTable tableName="type">
+    <changeSet id="create-egg-groups-table" author="jmolden">
+        <createTable tableName="egg_groups">
             <column name="id" type="Int">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="name" type="varchar(9)">
-            </column>
+            <column name="name" type="varchar(30)" />
         </createTable>
-        <createIndex tableName="type" indexName="id_index" unique="true">
+        <createIndex tableName="egg_groups" indexName="egg_groups_id_index" unique="true">
             <column name="id" />
         </createIndex>
+        <addAutoIncrement tableName="egg_groups" columnName="id" startWith="1" incrementBy="1" columnDataType="Int" />
     </changeSet>
 
 </databaseChangeLog>

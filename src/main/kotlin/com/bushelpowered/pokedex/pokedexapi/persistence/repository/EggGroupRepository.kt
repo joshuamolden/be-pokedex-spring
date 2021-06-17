@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface EggGroupRepository: JpaRepository<EggGroupEntity?, UUID?> {
-    fun findByName(name: String): EggGroupEntity?
+interface EggGroupRepository: JpaRepository<EggGroupEntity, Int> {
+    fun findFirstByName(name: String): EggGroupEntity?
 }

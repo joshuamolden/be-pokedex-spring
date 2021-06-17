@@ -11,18 +11,13 @@
             <column name="id" type="Int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(11)">
-            </column>
-            <column name="height" type="Double">
-            </column>
-            <column name="weight" type="Double">
-            </column>
-            <column name="genus" type="varchar(100)">
-            </column>
-            <column name="description" type="varchar(1000)">
-            </column>
+            <column name="name" type="varchar(11)" />
+            <column name="height" type="Double" />
+            <column name="weight" type="Double" />
+            <column name="genus" type="varchar(100)" />
+            <column name="description" type="varchar(1000)" />
         </createTable>
-        <createIndex tableName="pokemon" indexName="id_index" unique="true">
+        <createIndex tableName="pokemon" indexName="pokemon_id_index" unique="true">
             <column name="id" />
         </createIndex>
     </changeSet>

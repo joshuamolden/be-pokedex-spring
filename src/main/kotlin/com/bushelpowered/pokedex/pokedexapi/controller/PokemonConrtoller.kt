@@ -11,28 +11,22 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import kotlin.random.Random
 
- @RestController
-// @RequestMapping("/api")          Used to create base URI
-class PokemonConrtoller {
+@RestController
+ @RequestMapping("/api")
+class PokemonConrtoller(val pokemonService: PokemonService) {
 
-    @Autowired
-    lateinit var pokemonService: PokemonService
+
 
     @GetMapping ("/test")
     fun TestCreate(): Pokemon? {
 
         val testPokemon =  Pokemon(1, "Bulbasaur", listOf(Type("poison"), Type("grass")), 7.00, 69.00,
                 listOf(Ability("chlorophyll"), Ability("overgrow")), listOf(EggGroup("plant"), EggGroup("monster")),
-                Stats(45, 45, 49, 49, 65, 65),
                 "Seed Pokémon", "Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun’s rays, the seed grows progressively larger."
                 )
         return pokemonService.createPokemonEntity(testPokemon.toEntity())?.toDomain()
-    }
-
-    @GetMapping("foo")
-    fun bar(): String {
-        return "bar"
     }
 
     @GetMapping("/v1/pokemon/{pokemon_id}")

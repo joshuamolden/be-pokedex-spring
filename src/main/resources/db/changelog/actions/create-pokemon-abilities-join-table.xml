@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="create-pokemon-abilities-join-table" author="jmolden">
+        <createTable tableName="pokemon_abilities">
+            <column name="poke_id" type="Int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ability_id" type="Int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="pokemon_abilities" baseColumnNames="poke_id"
+                                 constraintName="foreign_key_from_abilities"
+                                 referencedTableName="pokemon" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="pokemon_abilities" baseColumnNames="ability_id"
+                                 constraintName="foreign_key_ability_id"
+                                 referencedTableName="abilities" referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>

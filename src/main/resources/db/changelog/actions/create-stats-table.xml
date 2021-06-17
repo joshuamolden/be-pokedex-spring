@@ -9,27 +9,21 @@
     <changeSet id="create-stats-table" author="jmolden">
         <createTable tableName="stats">
             <column name="id" type="Int">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints nullable="false" />
             </column>
-            <column name="hp" type="Int">
-            </column>
-            <column name="speed" type="Int">
-            </column>
-            <column name="attack" type="Int">
-            </column>
-            <column name="defense" type="Int">
-            </column>
-            <column name="special_attack" type="Int">
-            </column>
-            <column name="special_defense" type="Int">
-            </column>
+            <column name="hp" type="Int" />
+            <column name="speed" type="Int" />
+            <column name="attack" type="Int" />
+            <column name="defense" type="Int" />
+            <column name="special_attack" type="Int" />
+            <column name="special_defense" type="Int" />
         </createTable>
-        <createIndex tableName="stats" indexName="id_index" unique="true">
+        <createIndex tableName="stats" indexName="stats_id_index" unique="true">
             <column name="id" />
         </createIndex>
-        <addForeignKeyConstraint baseTableName="pokemon" baseColumnNames="id" constraintName="fk_pokemon_stats_id"
-                                 referencedTableName="stats"
-                                 referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="stats" baseColumnNames="id"
+                                 constraintName="foreign_key_from_stats"
+                                 referencedTableName="pokemon" referencedColumnNames="id" />
     </changeSet>
 
 </databaseChangeLog>

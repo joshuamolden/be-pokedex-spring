@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @EnableJpaRepositories
 class PokedexApiApplication {
-	@GetMapping
-	fun hello(): String {
-		return "Hello world!"
-	}
 }
 
 fun main(args: Array<String>) {
