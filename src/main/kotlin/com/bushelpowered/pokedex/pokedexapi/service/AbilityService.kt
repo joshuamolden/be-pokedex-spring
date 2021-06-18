@@ -12,6 +12,6 @@ class AbilityService(val abilityRepository: AbilityRepository) {
     }
 
     fun checkAbility(ability: AbilityEntity) : AbilityEntity {
-        return abilityRepository.findFirstByName(ability.name) ?: abilityRepository.save(ability)
+        return abilityRepository.findByName(ability.name) ?: abilityRepository.save(ability)
     }
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TypeRepository: JpaRepository<TypeEntity, Int> {
-    fun findFirstByName(name: String): TypeEntity?
+    fun findByName(name: String): TypeEntity?
 }

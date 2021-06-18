@@ -33,6 +33,7 @@ dependencies {
 	liquibaseRuntime("org.mariadb.jdbc:mariadb-java-client:2.7.1")
 	liquibaseRuntime("org.liquibase:liquibase-core:3.5.1")
 	liquibaseRuntime(sourceSets.getByName("main").output)
+	implementation("com.opencsv:opencsv:4.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }

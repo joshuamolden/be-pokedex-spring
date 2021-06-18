@@ -1,7 +1,8 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
 import com.bushelpowered.pokedex.pokedexapi.domain.*
-import com.bushelpowered.pokedex.pokedexapi.domain.Stats
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import javax.persistence.*
 
 @Entity
@@ -10,7 +11,8 @@ data class PokemonEntity (
         @Id
         val id: Int? = null,
         val name: String,
-        @ManyToMany
+        @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
+        @Fetch(value = FetchMode.SUBSELECT)
         @JoinTable(
                 name = "pokemon_types",
                 joinColumns = [JoinColumn(name = "poke_id")],
@@ -19,20 +21,28 @@ data class PokemonEntity (
         val types: List<TypeEntity>,
         val height: Double,
         val weight: Double,
-        @ManyToMany
+        @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
+        @Fetch(value = FetchMode.SUBSELECT)
         @JoinTable(
                 name = "pokemon_abilities",
                 joinColumns = [JoinColumn(name = "poke_id")],
                 inverseJoinColumns = [JoinColumn(name = "ability_id")]
         )
         val abilities: List<AbilityEntity>,
-        @ManyToMany
+        @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
+        @Fetch(value = FetchMode.SUBSELECT)
         @JoinTable(
                 name = "pokemon_egg_groups",
                 joinColumns = [JoinColumn(name = "poke_id")],
                 inverseJoinColumns = [JoinColumn(name = "egg_group_id")]
         )
         val egg_groups: List<EggGroupEntity>,
+        val hp: Int,
+        val speed: Int,
+        val attack: Int,
+        val defense: Int,
+        val special_attack: Int,
+        val special_defense: Int,
         val genus: String,
         val description: String
 )
@@ -45,6 +55,14 @@ fun PokemonEntity.toDomain(): Pokemon = Pokemon (
         weight = this.weight,
         abilities = this.abilities.map { abilityEntity -> abilityEntity.toDomain() },
         egg_groups = this.egg_groups.map { egg_groupEntity -> egg_groupEntity.toDomain() },
+        stats = Stats (
+                hp = this.hp,
+                speed = this.speed,
+                attack = this.attack,
+                defense = this.defense,
+                special_attack = this.special_attack,
+                special_defense = this.special_defense
+                ),
         genus = this.genus,
         description = this.description
 )

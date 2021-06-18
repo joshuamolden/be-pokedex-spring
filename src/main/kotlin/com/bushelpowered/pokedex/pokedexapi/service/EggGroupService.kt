@@ -12,6 +12,6 @@ class EggGroupService(val eggGroupRepository: EggGroupRepository) {
     }
 
     fun checkEggGroup(eggGroup: EggGroupEntity) : EggGroupEntity {
-        return eggGroupRepository.findFirstByName(eggGroup.name) ?: eggGroupRepository.save(eggGroup)
+        return eggGroupRepository.findByName(eggGroup.name) ?: eggGroupRepository.save(eggGroup)
     }
 }

@@ -12,6 +12,6 @@ class TypeService(val typeRepository: TypeRepository) {
     }
 
     fun checkType(type: TypeEntity) : TypeEntity {
-        return typeRepository.findFirstByName(type.name) ?: typeRepository.save(type)
+        return typeRepository.findByName(type.name) ?: typeRepository.save(type)
     }
 }

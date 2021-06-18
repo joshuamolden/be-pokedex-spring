@@ -7,5 +7,5 @@ import java.util.*
 
 @Repository
 interface EggGroupRepository: JpaRepository<EggGroupEntity, Int> {
-    fun findFirstByName(name: String): EggGroupEntity?
+    fun findByName(name: String): EggGroupEntity?
 }

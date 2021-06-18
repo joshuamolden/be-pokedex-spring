@@ -14,6 +14,12 @@
             <column name="name" type="varchar(11)" />
             <column name="height" type="Double" />
             <column name="weight" type="Double" />
+            <column name="hp" type="Int" />
+            <column name="speed" type="Int" />
+            <column name="attack" type="Int" />
+            <column name="defense" type="Int" />
+            <column name="special_attack" type="Int" />
+            <column name="special_defense" type="Int" />
             <column name="genus" type="varchar(100)" />
             <column name="description" type="varchar(1000)" />
         </createTable>

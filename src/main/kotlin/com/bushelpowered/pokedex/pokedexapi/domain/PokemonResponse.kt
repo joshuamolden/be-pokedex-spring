@@ -1,4 +1,4 @@
-package com.bushelpowered.pokedex.pokedexapi.persistence.entities
+package com.bushelpowered.pokedex.pokedexapi.domain
 
 data class PokemonResponse (
         val id: Int,
@@ -8,6 +8,7 @@ data class PokemonResponse (
         val weight: Double,
         val abilities: List<String>,
         val egg_groups: List<String>,
+        val stats: Map<String, Int>,
         val genus: String,
         val description: String,
 )

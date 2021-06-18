@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface AbilityRepository: JpaRepository<AbilityEntity, Int> {
-    fun findFirstByName(name: String): AbilityEntity?
+    fun findByName(name: String): AbilityEntity?
 }

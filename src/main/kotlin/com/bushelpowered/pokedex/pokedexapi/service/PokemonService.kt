@@ -22,11 +22,10 @@ class PokemonService(val pokemonRepository: PokemonRepository) {
 
     // create pokemon entity
     fun createPokemonEntity(pokemon: PokemonEntity) : PokemonEntity? {
-        return pokemonRepository.findFirstByName(pokemon.name) ?: pokemonRepository.save(pokemon.copy(
+        return pokemonRepository.findByName(pokemon.name) ?: pokemonRepository.save(pokemon.copy(
                 types = pokemon.types.map { type -> typeService.checkType(TypeEntity(name=type.name)) },
                 abilities = pokemon.abilities.map { ability -> abilityService.checkAbility(AbilityEntity(name=ability.name)) },
                 egg_groups = pokemon.egg_groups.map { egg_group -> eggGroupService.checkEggGroup(EggGroupEntity(name=egg_group.name)) },
-//                stats = pokemonEntity.stats.copy()
         ))
     }
 
