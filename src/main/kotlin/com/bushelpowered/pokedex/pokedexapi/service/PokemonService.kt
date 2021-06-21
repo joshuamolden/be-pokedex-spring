@@ -1,15 +1,19 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.AbilityEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity
+import com.bushelpowered.pokedex.pokedexapi.domain.Pokemon
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.*
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.PokemonRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.stereotype.Service
 
 @Service
-class PokemonService(val pokemonRepository: PokemonRepository) {
+class PokemonService() {
+
+    @Autowired
+    lateinit var pokemonRepository: PokemonRepository
 
     @Autowired
     lateinit var abilityService: AbilityService
@@ -29,19 +33,17 @@ class PokemonService(val pokemonRepository: PokemonRepository) {
         ))
     }
 
-    // update pokemon entity
-    fun updatePokemonEntity(pokemonEntity: PokemonEntity) : PokemonEntity? {
-        return pokemonRepository.save(pokemonEntity)
+
+    fun getAllPokemon(name: String?, pageable: Pageable): Page<Pokemon> {
+        return when(name.isNullOrBlank()) {
+            true -> pokemonRepository.findAll(pageable)?.map { it.toDomain() }
+            false -> pokemonRepository.findByNameContaining(name, pageable)?. map { it?.toDomain() }
+        }
     }
 
-    // getAll
-    fun getAllPokemonEntities(): List<PokemonEntity?>? {
-        return pokemonRepository.findAllBy()
-    }
-
-    // getById
-    fun getSpecificPokemonEntity(id: String): PokemonEntity? {
-        return pokemonRepository.findById(id)
+    fun getPokemonById(id: Int): PokemonEntity? {
+        val result = pokemonRepository.findById(id)
+        return if (result.isPresent) result.get() else null
     }
 
 }

@@ -1,7 +1,9 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.AbilityEntity
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity
 import com.opencsv.bean.CsvToBean
 import com.opencsv.bean.CsvToBeanBuilder
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 import java.io.BufferedReader
 import java.io.FileReader
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 @Service
 class CsvService {
@@ -20,12 +23,20 @@ class CsvService {
     @Autowired
     lateinit var typeService: TypeService
 
-    fun importPokemon(objectMapper: ObjectMapper): Boolean {
+    @Autowired
+    lateinit var abilityService: AbilityService
+
+    @Autowired
+    lateinit var eggGroupService: EggGroupService
+
+    fun importPokemon(): Boolean {
         val csvFile = BufferedReader(FileReader("src/main/resources/csv/pokedex.csv"))
+        val objectMapper = jacksonObjectMapper()
 
         try {
             val csvToBean: CsvToBean<PokemonCsv> = CsvToBeanBuilder<PokemonCsv>(csvFile)
                     .withType(PokemonCsv::class.java)
+                    .withSkipLines(1)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build()
 
@@ -34,14 +45,22 @@ class CsvService {
             pokemonEntities.forEach {
                 pokemonService.createPokemonEntity(
                         PokemonEntity(
-                                id = it.id,
+                                id = it.id?.toInt(),
                                 name = it.name,
-                                types = objectMapper.readValue,
-
-                        )
-                )
+                                types = objectMapper.readTree(it.types).map { type -> typeService.checkType(TypeEntity(name=type.toString())) },
+                                height = it.height,
+                                weight = it.weight,
+                                abilities = objectMapper.readTree(it.abilities).map { ability -> abilityService.checkAbility(AbilityEntity(name=ability.toString())) },
+                                egg_groups = objectMapper.readTree(it.egg_groups).map { egg_group -> eggGroupService.checkEggGroup(EggGroupEntity(name=egg_group.toString())) },
+                                hp = objectMapper.readTree(it.stats)["hp"].toString().toInt(),
+                                speed = objectMapper.readTree(it.stats)["speed"].toString().toInt(),
+                                attack = objectMapper.readTree(it.stats)["attack"].toString().toInt(),
+                                defense = objectMapper.readTree(it.stats)["defense"].toString().toInt(),
+                                special_attack = objectMapper.readTree(it.stats)["special-attack"].toString().toInt(),
+                                special_defense = objectMapper.readTree(it.stats)["special-defense"].toString().toInt(),
+                                genus = it.genus,
+                                description = it.description))
             }
-
             return true
         } catch (exception: ResponseStatusException) {
             throw exception
@@ -51,14 +70,14 @@ class CsvService {
     }
 
     data class PokemonCsv (
-            val id: Int? = null,
+            val id: String? = null,
             val name: String = "",
             val types: String = "",
-            val height: Double? = null,
-            val weight: Double? = null,
+            val height: Double = 0.0,
+            val weight: Double = 0.0,
             val abilities: String = "",
             val egg_groups: String = "",
             val stats: String = "",
-            val genus: String? = null,
-            val description: String? = null)
+            val genus: String = "",
+            val description: String = "")
 }

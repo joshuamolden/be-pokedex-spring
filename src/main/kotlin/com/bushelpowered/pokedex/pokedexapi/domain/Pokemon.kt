@@ -1,5 +1,7 @@
 package com.bushelpowered.pokedex.pokedexapi.domain
 
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonDetailsResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
 
 data class Pokemon (
@@ -33,21 +35,27 @@ fun Pokemon.toEntity(): PokemonEntity = PokemonEntity (
         description = this.description
 )
 
-//fun Pokemon.toResponse(): PokemonResponse = PokemonResponse (
-//        id =this.id!!,
-//        name = name,
-//        types = types.map { type -> type.name },
-//        height = height,
-//        weight = weight,
-//        abilities = abilities.map { ability -> ability.name },
-//        egg_groups = egg_groups.map { eggGroup -> eggGroup.name },
-//        stats = mapOf(
-//                "hp" to stats.hp,
-//                "speed" to stats.speed,
-//                "attack" to stats.attack,
-//                "defense" to stats.defense,
-//                "special-attack" to stats.special_attack,
-//                "special-defense" to stats.special_defense),
-//        genus = genus,
-//        description = description,
-//        )
+fun Pokemon.toDetailsResponse(): PokemonDetailsResponse = PokemonDetailsResponse (
+        id = this.id!!, // !! means id will not be null
+        name = this.name,
+        types = this.types.map { type -> type.name },
+        height = this.height,
+        weight = this.weight,
+        abilities = this.abilities.map { ability -> ability.name },
+        egg_groups = this.egg_groups.map { eggGroup -> eggGroup.name },
+        stats = mapOf(
+                "hp" to this.stats.hp,
+                "speed" to this.stats.speed,
+                "attack" to this.stats.attack,
+                "defense" to stats.defense,
+                "special-attack" to this.stats.special_attack,
+                "special-defense" to this.stats.special_defense),
+        genus = this.genus,
+        description = this.description,
+        )
+
+fun Pokemon.toListResponse(): PokemonListResponse = PokemonListResponse(
+        id = this.id!!,
+        name = this.name,
+        types = this.types.map { type -> type.name }
+)
