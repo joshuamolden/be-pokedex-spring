@@ -11,7 +11,7 @@
             <column name="id" type="Int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(11)" />
+            <column name="name" type="varchar(50)" />
             <column name="height" type="Double" />
             <column name="weight" type="Double" />
             <column name="hp" type="Int" />

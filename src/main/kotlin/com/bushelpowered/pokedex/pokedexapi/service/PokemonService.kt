@@ -24,7 +24,7 @@ class PokemonService() {
     @Autowired
     lateinit var typeService: TypeService
 
-    // create pokemon entity
+    // will check if pokemon exits already before creating pokemon
     fun createPokemonEntity(pokemon: PokemonEntity) : PokemonEntity? {
         return pokemonRepository.findByName(pokemon.name) ?: pokemonRepository.save(pokemon.copy(
                 types = pokemon.types.map { type -> typeService.checkType(TypeEntity(name=type.name)) },
@@ -32,7 +32,6 @@ class PokemonService() {
                 egg_groups = pokemon.egg_groups.map { egg_group -> eggGroupService.checkEggGroup(EggGroupEntity(name=egg_group.name)) },
         ))
     }
-
 
     fun getAllPokemon(name: String?, pageable: Pageable): Page<Pokemon> {
         return when(name.isNullOrBlank()) {
@@ -45,5 +44,4 @@ class PokemonService() {
         val result = pokemonRepository.findById(id)
         return if (result.isPresent) result.get() else null
     }
-
 }

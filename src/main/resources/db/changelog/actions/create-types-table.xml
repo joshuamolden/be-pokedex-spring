@@ -11,7 +11,7 @@
             <column name="id" type="Int">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="name" type="varchar(9)" />
+            <column name="name" type="varchar(50)" />
         </createTable>
         <createIndex tableName="types" indexName="types_id_index" unique="true">
             <column name="id" />
