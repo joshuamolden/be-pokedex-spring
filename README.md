@@ -8,16 +8,11 @@ pokemon. In the future, this api will be able to keep track of trainer informati
 
 ### Technology Stack Information
 
-- IDE
-  : IntelliJ IDEA Community Edition
-- Container Platform
-  : Docker (MySQL)
-- Database Management
-  : Liquibase
-- Runtime
-  : JVM v1.5.10
-- Framework
-  : Spring Boot v2.6.0-SNAPSHOT
+- IDE: IntelliJ IDEA Community Edition
+- Container Platform: Docker (MySQL)
+- Database Management: Liquibase
+- Runtime: JVM v1.5.10
+- Framework: Spring Boot v2.6.0-SNAPSHOT
 
 ---
 
@@ -34,10 +29,12 @@ pokemon. In the future, this api will be able to keep track of trainer informati
 ```text
 git clone git@bitbucket.org:myriadmobile/pokedexjm-api.git
 ```
+
 The database can then be hosted on a Docker container through the docker-compose file with this command in in the terminal
 ```text
 docker compose up -d
 ```
+
 The app can then be started through IntelliJ start. If TablePlus is downloaded, you can view your database tables after inputting
 database information.
 
@@ -50,6 +47,7 @@ database information.
     
     
 2. /api/v1/pokemon/?name=
+   
    - This endpoint takes an optional name parameter, which will search the database for pokemon that **contain** the string of 
       characters in the search parameter. The results for this query will also be returned in a paginated list (15 per page)
       that is sorted by the id of the pokemon.
