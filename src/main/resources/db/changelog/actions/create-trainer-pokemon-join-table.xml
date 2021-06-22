@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="create-trainer-pokemon-join-table" author="jmolden">
+        <createTable tableName="trainer_pokemon">
+            <column name="trainer_id" type="Int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="poke_id" type="Int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="trainer_pokemon" baseColumnNames="trainer_id"
+                                 constraintName="foreign_key_from_trainer"
+                                 referencedTableName="trainer" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="trainer_pokemon" baseColumnNames="poke_id"
+                                 constraintName="foreign_key_poke_id"
+                                 referencedTableName="pokemon" referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>

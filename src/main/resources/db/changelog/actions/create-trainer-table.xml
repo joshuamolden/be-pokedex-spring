@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+
+    <changeSet id="create-trainer-table" author="jmolden">
+        <createTable tableName="trainer">
+            <column name="id" type="Int">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="user_name" type="varchar(50)" />
+            <column name="email" type="varchar(100)" />
+            <column name="password" type="varchar(50)" />
+        </createTable>
+        <createIndex tableName="trainer" indexName="trainer_id_index" unique="true">
+            <column name="id" />
+        </createIndex>
+        <addAutoIncrement tableName="trainer" columnName="id" startWith="1" incrementBy="1" columnDataType="Int" />
+    </changeSet>
+
+</databaseChangeLog>

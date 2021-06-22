@@ -1,6 +1,7 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
 import com.bushelpowered.pokedex.pokedexapi.domain.*
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import javax.persistence.*
@@ -11,6 +12,11 @@ data class PokemonEntity (
         @Id
         val id: Int? = null,
         val name: String,
+        @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
+        @JoinTable(name = "trainer_pokemon",
+                joinColumns = [(JoinColumn(name = "trainer_id", referencedColumnName = "id"))],
+                inverseJoinColumns = [(JoinColumn(name = "poke_id", referencedColumnName = "id"))])
+        val trainers: List<TrainerEntity>? = null,
         @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
         @Fetch(value = FetchMode.SUBSELECT)
         @JoinTable(
