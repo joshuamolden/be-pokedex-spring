@@ -21,7 +21,7 @@ pokemon. In the future, this api will be able to keep track of trainer informati
 
 ---
 
-###Requirements
+### Requirements
 1. IntelliJ IDEA Community Edition
 2. Docker
 3. Java 8 or 9
@@ -30,7 +30,7 @@ pokemon. In the future, this api will be able to keep track of trainer informati
 
 ---
 
-###Installation
+### Installation
 ```text
 git clone git@bitbucket.org:myriadmobile/pokedexjm-api.git
 ```
@@ -43,7 +43,7 @@ database information.
 
 ---
 
-##API Endpoints for Retrieving Pokemon Information
+## API Endpoints for Retrieving Pokemon Information
 1. /api/v1/pokemon/
 
     - This endpoint will load a paginated list of pokemon (15 per page) that is sorted by the id of the pokemon.
@@ -67,7 +67,7 @@ database information.
     made with an invalid pokemon_id, an HTTP status code 404 will be sent with an empty body.
       
     
-####Sample JSON response for details of a specific pokemon
+#### Sample JSON response for details of a specific pokemon
 ```json5
 {
     "id": 348,
