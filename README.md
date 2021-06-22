@@ -49,8 +49,8 @@ database information.
 2. /api/v1/pokemon/?name=
    
    - This endpoint takes an optional name parameter, which will search the database for pokemon that **contain** the string of 
-      characters in the search parameter. The results for this query will also be returned in a paginated list (15 per page)
-      that is sorted by the id of the pokemon.
+    characters in the search parameter. The results for this query will also be returned in a paginated list (15 per page)
+    that is sorted by the id of the pokemon.
      
       
 3. /api/v1/pokemon/import
