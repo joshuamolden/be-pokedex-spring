@@ -1,14 +1,14 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
 import com.bushelpowered.pokedex.pokedexapi.domain.*
-import com.fasterxml.jackson.annotation.JsonIgnore
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TypeResponse
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import javax.persistence.*
 
 @Entity
 @Table(name = "pokemon")
-data class PokemonEntity (
+data class PokemonEntity(
         @Id
         val id: Int? = null,
         val name: String,

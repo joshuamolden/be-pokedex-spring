@@ -13,18 +13,17 @@ data class TrainerEntity (
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Int? = null,
         @Column(unique = true)
-        val user_name: String,
+        val name: String,
         @Column(unique = true)
         val email: String,
-        @Column(unique = true)
         val password: String,
         @ManyToMany(fetch = FetchType.LAZY, mappedBy = "trainers")
-        val pokemon_list: List<PokemonEntity>
+        val pokemon_list: List<PokemonEntity>? = null
         )
 
-fun TrainerEntity.ToDomain(): Trainer = Trainer (
-        user_name = this.user_name,
+fun TrainerEntity.toDomain(): Trainer = Trainer (
+        name = this.name,
         email = this.email,
         password = this.password,
-        pokemon_list = this.pokemon_list.map { pokemonEntity -> pokemonEntity.toDomain() }
+        pokemon_list = this.pokemon_list?.map { pokemonEntity -> pokemonEntity.toDomain() }
         )

@@ -14,5 +14,6 @@ data class AbilityEntity (
 )
 
 fun AbilityEntity.toDomain(): Ability = Ability (
+        id = this.id,
         name = this.name
 )

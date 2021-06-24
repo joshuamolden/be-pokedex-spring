@@ -14,5 +14,6 @@ data class TypeEntity (
 )
 
 fun TypeEntity.toDomain(): Type = Type (
+        id = this.id,
         name = this.name
         )

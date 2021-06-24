@@ -11,9 +11,9 @@
             <column name="id" type="Int">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="user_name" type="varchar(50)" />
+            <column name="name" type="varchar(50)" />
             <column name="email" type="varchar(100)" />
-            <column name="password" type="varchar(50)" />
+            <column name="password" type="varchar(100)" />
         </createTable>
         <createIndex tableName="trainer" indexName="trainer_id_index" unique="true">
             <column name="id" />

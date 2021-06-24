@@ -1,16 +1,21 @@
 package com.bushelpowered.pokedex.pokedexapi.domain
 
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TrainerEntity
 data class Trainer (
-        val user_name: String,
+        val name: String,
         val email: String,
         val password: String,
-        val pokemon_list: List<Pokemon>
+        val pokemon_list: List<Pokemon>? = null
         )
 
-fun Trainer.ToEntity(): TrainerEntity = TrainerEntity (
-        user_name = this.user_name,
+fun Trainer.toEntity(): TrainerEntity = TrainerEntity (
+        name = this.name,
         email = this.email,
         password = this.password,
-        pokemon_list = this.pokemon_list.map { pokemon -> pokemon.toEntity() }
+        pokemon_list = this.pokemon_list?.map { pokemon -> pokemon.toEntity() }
 )
+fun Trainer.toResponse(): TrainerResponse = TrainerResponse (
+        name = this.name,
+        email = this.name
+        )

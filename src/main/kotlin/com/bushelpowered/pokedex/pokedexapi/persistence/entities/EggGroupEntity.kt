@@ -14,5 +14,6 @@ data class EggGroupEntity (
 )
 
 fun EggGroupEntity.toDomain(): EggGroup = EggGroup (
+        id = this.id,
         name = this.name
         )

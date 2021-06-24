@@ -1,7 +1,7 @@
 package com.bushelpowered.pokedex.pokedexapi.domain
 
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonDetailsResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonListResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
 
 data class Pokemon (
@@ -35,7 +35,7 @@ fun Pokemon.toEntity(): PokemonEntity = PokemonEntity (
         description = this.description
 )
 
-fun Pokemon.toDetailsResponse(): PokemonDetailsResponse = PokemonDetailsResponse (
+fun Pokemon.toResponse(): PokemonResponse = PokemonResponse (
         id = this.id!!, // !! means id will not be null
         name = this.name,
         types = this.types.map { type -> type.name },

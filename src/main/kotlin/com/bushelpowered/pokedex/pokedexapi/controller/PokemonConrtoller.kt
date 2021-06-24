@@ -1,9 +1,8 @@
 package com.bushelpowered.pokedex.pokedexapi.controller
 
 import com.bushelpowered.pokedex.pokedexapi.domain.*
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonDetailsResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonListResponse
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
 import com.bushelpowered.pokedex.pokedexapi.service.CsvService
 import com.bushelpowered.pokedex.pokedexapi.service.PokemonService
@@ -22,13 +21,13 @@ class PokemonConrtoller(val pokemonService: PokemonService,
 
     // imports pokemon once
    @PostMapping("/import")
-   fun testImport(): ResponseEntity<String> {
-       var bodyInfo = "Pokemon Imported"
+   fun importFromCsv(): ResponseEntity<String> {
+       var httpCode = HttpStatus.OK
        when(pokemonService.getPokemonById(1)) {
-           null ->  csvService.importPokemon(ObjectMapper())
-           else -> bodyInfo = "Pokemon Already imported"
+           null -> csvService.importPokemon(ObjectMapper())
+           else -> httpCode = HttpStatus.BAD_REQUEST
        }
-       return ResponseEntity.ok().body(bodyInfo)
+       return ResponseEntity(httpCode)
    }
 
     @GetMapping("/")
@@ -36,17 +35,19 @@ class PokemonConrtoller(val pokemonService: PokemonService,
             @RequestParam("name") name: String?,
             @PageableDefault(sort = ["id"], value = 15) pageable: Pageable
     ): ResponseEntity<Page<PokemonListResponse>> {
-        return ResponseEntity.ok(pokemonService.getAllPokemon(name, pageable).map (Pokemon::toListResponse))
+        return ResponseEntity.ok(pokemonService.getAllPokemon(name, pageable).map { pokemonInList -> pokemonInList })
     }
 
     @GetMapping("/{pokemon_id}")
-    fun getSpecificPokemonEntity (@PathVariable pokemon_id: Int): ResponseEntity<PokemonDetailsResponse>? {
+    fun getSpecificPokemonEntity (
+            @PathVariable pokemon_id: Int
+    ): ResponseEntity<PokemonResponse>? {
         val returnPokemon = pokemonService.getPokemonById(pokemon_id)
 //        val httpCode = if (returnPokemon!!.equals(null)) HttpStatus.OK else HttpStatus.NOT_FOUND      can't figure out how to make if function like the when block of code
         val httpCode = when(returnPokemon) {
            null -> HttpStatus.NOT_FOUND
            else -> HttpStatus.OK
         }
-        return ResponseEntity<PokemonDetailsResponse>(returnPokemon?.toDomain()?.toDetailsResponse(), httpCode)
+        return ResponseEntity<PokemonResponse>(returnPokemon, httpCode)
     }
 }
