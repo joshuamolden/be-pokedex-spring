@@ -1,6 +1,9 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
 import com.bushelpowered.pokedex.pokedexapi.domain.Trainer
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequest
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.BaseTrainerResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerErrorResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.toEntity
 import com.bushelpowered.pokedex.pokedexapi.domain.toResponse
@@ -22,11 +25,11 @@ class TrainerService(private val trainerRepository: TrainerRepository) {
                         password = passwordEncoder.encode(newTrainer.password)).toEntity()).toDomain().toResponse()
     }
 
-    fun findTrainerByEmail(email: String): TrainerResponse? {
+    fun findTrainerByEmail(email: String) : TrainerResponse? {
         return trainerRepository.findByEmail(email)?.toDomain()?.toResponse()
     }
 
-    private fun comparePassword(password: String, trainerPassword: String): Boolean {
-        return BCryptPasswordEncoder().matches(password, trainerPassword)
+    fun comparePassword(trainer: TrainerLoginRequest): Boolean {
+        return BCryptPasswordEncoder().matches(trainer.password, trainerRepository.findByEmail(trainer.email)!!.password)   // wont be null if passowrd is checked
     }
 }

@@ -22,3 +22,13 @@ data class TrainerErrorResponse(
         found = found,
         email = email
 )
+
+data class TrainerLoginError(
+        override val found: Boolean = true,
+        val message: String,
+        override val email: String,
+        val password: String,
+) : BaseTrainerResponse(
+        found = found,
+        email = email
+)
