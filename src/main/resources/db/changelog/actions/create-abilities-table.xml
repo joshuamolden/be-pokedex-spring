@@ -9,14 +9,14 @@
     <changeSet id="create-abilities-table" author="jmolden">
         <createTable tableName="abilities">
             <column name="id" type="Int">
-                <constraints primaryKey="true" nullable="false" />
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(50)" />
+            <column name="name" type="varchar(50)"/>
         </createTable>
         <createIndex tableName="abilities" indexName="abilities_id_index" unique="true">
-            <column name="id" />
+            <column name="id"/>
         </createIndex>
-        <addAutoIncrement tableName="abilities" columnName="id" startWith="1" incrementBy="1" columnDataType="Int" />
+        <addAutoIncrement tableName="abilities" columnName="id" startWith="1" incrementBy="1" columnDataType="Int"/>
     </changeSet>
 
 </databaseChangeLog>

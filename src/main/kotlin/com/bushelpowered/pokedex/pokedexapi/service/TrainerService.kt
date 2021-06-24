@@ -2,8 +2,8 @@ package com.bushelpowered.pokedex.pokedexapi.service
 
 import com.bushelpowered.pokedex.pokedexapi.domain.Trainer
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.toEntity
 import com.bushelpowered.pokedex.pokedexapi.domain.toResponse
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TrainerEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.TrainerRepository
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -15,15 +15,14 @@ class TrainerService(private val trainerRepository: TrainerRepository) {
     private val passwordEncoder = BCryptPasswordEncoder()
 
     fun addTrainer(newTrainer: Trainer): TrainerResponse {
-        return trainerRepository.findByEmail(newTrainer.email)?.toDomain()?.toResponse() ?:
-        trainerRepository.save(
-                TrainerEntity(
+        return trainerRepository.findByEmail(newTrainer.email)?.toDomain()?.toResponse() ?: trainerRepository.save(
+                Trainer(
                         name = newTrainer.name,
                         email = newTrainer.email,
-                        password = passwordEncoder.encode(newTrainer.password))).toDomain().toResponse()
-        }
+                        password = passwordEncoder.encode(newTrainer.password)).toEntity()).toDomain().toResponse()
+    }
 
-    fun findByEmail(email: String): TrainerResponse? {
+    fun findTrainerByEmail(email: String): TrainerResponse? {
         return trainerRepository.findByEmail(email)?.toDomain()?.toResponse()
     }
 

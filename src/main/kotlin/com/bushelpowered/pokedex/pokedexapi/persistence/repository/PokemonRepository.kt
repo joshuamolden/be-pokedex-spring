@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface PokemonRepository: JpaRepository<PokemonEntity, Int> {
+interface PokemonRepository : JpaRepository<PokemonEntity, Int> {
     fun findByNameContaining(name: String, pageable: Pageable): Page<PokemonEntity?>
     fun findByName(name: String): PokemonEntity?
 }

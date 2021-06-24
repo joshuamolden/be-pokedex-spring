@@ -1,7 +1,7 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
-import com.bushelpowered.pokedex.pokedexapi.domain.*
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TypeResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.Pokemon
+import com.bushelpowered.pokedex.pokedexapi.domain.Stats
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import javax.persistence.*
@@ -53,7 +53,7 @@ data class PokemonEntity(
         val description: String
 )
 
-fun PokemonEntity.toDomain(): Pokemon = Pokemon (
+fun PokemonEntity.toDomain(): Pokemon = Pokemon(
         id = this.id,
         name = this.name,
         types = this.types.map { typeEntity -> typeEntity.toDomain() },
@@ -61,14 +61,14 @@ fun PokemonEntity.toDomain(): Pokemon = Pokemon (
         weight = this.weight,
         abilities = this.abilities.map { abilityEntity -> abilityEntity.toDomain() },
         egg_groups = this.egg_groups.map { egg_groupEntity -> egg_groupEntity.toDomain() },
-        stats = Stats (
+        stats = Stats(
                 hp = this.hp,
                 speed = this.speed,
                 attack = this.attack,
                 defense = this.defense,
                 special_attack = this.special_attack,
                 special_defense = this.special_defense
-                ),
+        ),
         genus = this.genus,
         description = this.description
 )

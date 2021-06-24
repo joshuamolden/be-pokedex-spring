@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "abilities")
-data class AbilityEntity (
+data class AbilityEntity(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Int? = null,
@@ -13,7 +13,7 @@ data class AbilityEntity (
         val name: String
 )
 
-fun AbilityEntity.toDomain(): Ability = Ability (
+fun AbilityEntity.toDomain(): Ability = Ability(
         id = this.id,
         name = this.name
 )

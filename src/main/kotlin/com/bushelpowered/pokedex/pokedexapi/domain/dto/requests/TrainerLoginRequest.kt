@@ -1,6 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.domain.dto.requests
 
-class LoginRequest (
+class TrainerLoginRequest(
         val email: String,
         val password: String
-        )
+)

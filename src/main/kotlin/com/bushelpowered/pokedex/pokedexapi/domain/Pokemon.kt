@@ -4,7 +4,7 @@ import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
 
-data class Pokemon (
+data class Pokemon(
         val id: Int? = null,   // Int? allows id to be nullable, and '= null' sets the default value to null
         val name: String,
         val types: List<Type>,
@@ -15,9 +15,9 @@ data class Pokemon (
         val stats: Stats,
         val genus: String,
         val description: String
-        )
+)
 
-fun Pokemon.toEntity(): PokemonEntity = PokemonEntity (
+fun Pokemon.toEntity(): PokemonEntity = PokemonEntity(
         id = this.id,
         name = this.name,
         types = this.types.map { type -> type.toEntity() },
@@ -35,7 +35,7 @@ fun Pokemon.toEntity(): PokemonEntity = PokemonEntity (
         description = this.description
 )
 
-fun Pokemon.toResponse(): PokemonResponse = PokemonResponse (
+fun Pokemon.toResponse(): PokemonResponse = PokemonResponse(
         id = this.id!!, // !! means id will not be null
         name = this.name,
         types = this.types.map { type -> type.name },
@@ -52,7 +52,7 @@ fun Pokemon.toResponse(): PokemonResponse = PokemonResponse (
                 "special-defense" to this.stats.special_defense),
         genus = this.genus,
         description = this.description,
-        )
+)
 
 fun Pokemon.toListResponse(): PokemonListResponse = PokemonListResponse(
         id = this.id!!,

@@ -2,8 +2,10 @@ package com.bushelpowered.pokedex.pokedexapi.service
 
 import com.bushelpowered.pokedex.pokedexapi.domain.Pokemon
 import com.bushelpowered.pokedex.pokedexapi.domain.Stats
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.toDomain
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.*
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.AbilityEntity
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity
+import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.opencsv.bean.CsvToBean
 import com.opencsv.bean.CsvToBeanBuilder
@@ -43,27 +45,27 @@ class CsvService {
 //                return jacksonObjectMapper().readTree(it.["stats"])[statType].toString().toInt()      tyring to figure out how to make helper method for stats
 //            }
             // takes about 35-40 seconds to add all info to db, is this too much time?
-                pokemonEntities.forEach {
-                    pokemonService.createPokemon(
-                            Pokemon (
-                                    id = it.id,
-                                    name = it.name ?: "",
-                                    types = objectMapper.readTree(it.types).map { type -> TypeEntity(name = type.toString().replace("\"", "")).toDomain() },
-                                    height = it.height ?: 0.0,
-                                    weight = it.weight ?: 0.0,
-                                    abilities = objectMapper.readTree(it.abilities).map { ability -> AbilityEntity(name = ability.toString().replace("\"", "")).toDomain() },
-                                    egg_groups = objectMapper.readTree(it.egg_groups).map { egg_group -> EggGroupEntity(name = egg_group.toString().replace("\"", "")).toDomain() },
-                                    stats = Stats (
-                                            hp = objectMapper.readTree(it.stats)["hp"].toString().toInt(),
-                                            speed = objectMapper.readTree(it.stats)["speed"].toString().toInt(),
-                                            attack = objectMapper.readTree(it.stats)["attack"].toString().toInt(),
-                                            defense = objectMapper.readTree(it.stats)["defense"].toString().toInt(),
-                                            special_attack = objectMapper.readTree(it.stats)["special-attack"].toString().toInt(),
-                                            special_defense = objectMapper.readTree(it.stats)["special-defense"].toString().toInt()
-                                    ),
-                                    genus = it.genus!!,
-                                    description = it.description!!))
-                }
+            pokemonEntities.forEach {
+                pokemonService.createPokemon(
+                        Pokemon(
+                                id = it.id,
+                                name = it.name ?: "",
+                                types = objectMapper.readTree(it.types).map { type -> TypeEntity(name = type.toString().replace("\"", "")).toDomain() },
+                                height = it.height ?: 0.0,
+                                weight = it.weight ?: 0.0,
+                                abilities = objectMapper.readTree(it.abilities).map { ability -> AbilityEntity(name = ability.toString().replace("\"", "")).toDomain() },
+                                egg_groups = objectMapper.readTree(it.egg_groups).map { egg_group -> EggGroupEntity(name = egg_group.toString().replace("\"", "")).toDomain() },
+                                stats = Stats(
+                                        hp = objectMapper.readTree(it.stats)["hp"].toString().toInt(),
+                                        speed = objectMapper.readTree(it.stats)["speed"].toString().toInt(),
+                                        attack = objectMapper.readTree(it.stats)["attack"].toString().toInt(),
+                                        defense = objectMapper.readTree(it.stats)["defense"].toString().toInt(),
+                                        special_attack = objectMapper.readTree(it.stats)["special-attack"].toString().toInt(),
+                                        special_defense = objectMapper.readTree(it.stats)["special-defense"].toString().toInt()
+                                ),
+                                genus = it.genus!!,
+                                description = it.description!!))
+            }
             return true
         } catch (exception: ResponseStatusException) {
             throw exception
@@ -71,7 +73,8 @@ class CsvService {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "There is an issue with the uploaded CSV file")
         }
     }
-    data class PokemonFromCsv (
+
+    data class PokemonFromCsv(
             // values need to be var in order to parse from csv file
             var id: Int? = null,
             var name: String? = null,

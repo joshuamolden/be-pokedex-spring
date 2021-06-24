@@ -17,10 +17,10 @@
         </createTable>
         <addForeignKeyConstraint baseTableName="pokemon_abilities" baseColumnNames="poke_id"
                                  constraintName="foreign_key_from_abilities"
-                                 referencedTableName="pokemon" referencedColumnNames="id" />
+                                 referencedTableName="pokemon" referencedColumnNames="id"/>
         <addForeignKeyConstraint baseTableName="pokemon_abilities" baseColumnNames="ability_id"
                                  constraintName="foreign_key_ability_id"
-                                 referencedTableName="abilities" referencedColumnNames="id" />
+                                 referencedTableName="abilities" referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>
