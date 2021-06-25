@@ -87,3 +87,5 @@ class CsvService {
             var genus: String? = null,
             var description: String? = null)
 }
+
+// for testing {"name": "test, "email": "test@gmail.com", "password": "testPassword"}

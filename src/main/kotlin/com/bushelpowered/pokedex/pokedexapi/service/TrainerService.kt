@@ -2,18 +2,24 @@ package com.bushelpowered.pokedex.pokedexapi.service
 
 import com.bushelpowered.pokedex.pokedexapi.domain.Trainer
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequest
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.BaseTrainerResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerErrorResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.toEntity
 import com.bushelpowered.pokedex.pokedexapi.domain.toResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
+import com.bushelpowered.pokedex.pokedexapi.persistence.repository.PokemonRepository
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.TrainerRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class TrainerService(private val trainerRepository: TrainerRepository) {
+class TrainerService {
+
+    @Autowired
+    lateinit var trainerRepository: TrainerRepository
+
+    @Autowired
+    lateinit var pokemonRepository: PokemonRepository
 
     private val passwordEncoder = BCryptPasswordEncoder()
 
@@ -30,6 +36,11 @@ class TrainerService(private val trainerRepository: TrainerRepository) {
     }
 
     fun comparePassword(trainer: TrainerLoginRequest): Boolean {
-        return BCryptPasswordEncoder().matches(trainer.password, trainerRepository.findByEmail(trainer.email)!!.password)   // wont be null if passowrd is checked
+        return BCryptPasswordEncoder().matches(trainer.password, trainerRepository.findByEmail(trainer.email)!!.password)   // wont be null if in this block
     }
+
+//    fun trainerCapturesPokemon(pokemonId: Int): CapturePokemonResponse {
+//        val pokemon = pokemonRepository.findById(pokemonId)
+//        val test = trainerRepository.findByEmail("test").pokemon_list.
+//    }
 }

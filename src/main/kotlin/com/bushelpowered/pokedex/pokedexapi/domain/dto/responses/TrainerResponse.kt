@@ -1,34 +1,44 @@
 package com.bushelpowered.pokedex.pokedexapi.domain.dto.responses
 
+abstract class BaseTrainerResponse(
+        open val found: Boolean
+)
+
 data class TrainerResponse(
         override val found: Boolean = true,
         val name: String,
-        override val email: String
+        val email: String
 ) : BaseTrainerResponse(
-        found = found,
-        email = email
-)
-
-abstract class BaseTrainerResponse(
-        open val found: Boolean,
-        open val email: String
+        found = found
 )
 
 data class TrainerErrorResponse(
         override val found: Boolean = true,
         val message: String,
-        override val email: String
+        val email: String
 ) : BaseTrainerResponse(
-        found = found,
-        email = email
+        found = found
 )
 
 data class TrainerLoginError(
         override val found: Boolean = true,
         val message: String,
-        override val email: String,
+        val email: String,
         val password: String,
 ) : BaseTrainerResponse(
-        found = found,
-        email = email
+        found = found
+)
+
+data class TrainerAuthError(
+        override val found: Boolean = false,
+        val message: String
+) : BaseTrainerResponse(
+        found = found
+)
+
+data class TrainerLogout(
+        override val found: Boolean = true,
+        val message: String
+) : BaseTrainerResponse(
+        found = found
 )

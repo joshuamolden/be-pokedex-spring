@@ -7,7 +7,10 @@
            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
     <changeSet id="create-trainer-pokemon-join-table" author="jmolden">
-        <createTable tableName="trainer_pokemon">
+        <createTable tableName="captured_pokemon">
+            <column name="id" type="Int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
             <column name="trainer_id" type="Int">
                 <constraints nullable="false"/>
             </column>
@@ -15,10 +18,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="trainer_pokemon" baseColumnNames="trainer_id"
+        <createIndex tableName="captured_pokemon" indexName="captured_pokemon_id_index" unique="true">
+            <column name="id"/>
+        </createIndex>
+        <addAutoIncrement tableName="captured_pokemon" columnName="id" startWith="1" incrementBy="1" columnDataType="Int"/>
+        <addForeignKeyConstraint baseTableName="captured_pokemon" baseColumnNames="trainer_id"
                                  constraintName="foreign_key_from_trainer"
                                  referencedTableName="trainer" referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="trainer_pokemon" baseColumnNames="poke_id"
+        <addForeignKeyConstraint baseTableName="captured_pokemon" baseColumnNames="poke_id"
                                  constraintName="foreign_key_poke_id"
                                  referencedTableName="pokemon" referencedColumnNames="id"/>
     </changeSet>

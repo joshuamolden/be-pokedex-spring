@@ -27,6 +27,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.liquibase:liquibase-core")
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
 	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.1")
 	liquibaseRuntime("ch.qos.logback:logback-classic:1.2.3")
 	liquibaseRuntime("ch.qos.logback:logback-core:1.2.3")
