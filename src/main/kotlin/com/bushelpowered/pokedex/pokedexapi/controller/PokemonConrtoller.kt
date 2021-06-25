@@ -25,7 +25,7 @@ class PokemonConrtoller(val pokemonService: PokemonService,
             null -> csvService.importPokemon(ObjectMapper())
             else -> httpCode = HttpStatus.BAD_REQUEST
         }
-        return ResponseEntity(httpCode)
+        return ResponseEntity("Pokemon already imported", httpCode)
     }
 
     @GetMapping("/")

@@ -29,6 +29,7 @@ dependencies {
 	implementation("org.liquibase:liquibase-core")
 	implementation("io.jsonwebtoken:jjwt:0.9.1")
 	implementation("org.mariadb.jdbc:mariadb-java-client:2.7.1")
+	implementation("org.springdoc:springdoc-openapi-ui:1.5.9")
 	liquibaseRuntime("ch.qos.logback:logback-classic:1.2.3")
 	liquibaseRuntime("ch.qos.logback:logback-core:1.2.3")
 	liquibaseRuntime("org.mariadb.jdbc:mariadb-java-client:2.7.1")

@@ -40,58 +40,8 @@ database information.
 
 ---
 
-## API Endpoints for Retrieving Pokemon Information
-1. /api/v1/pokemon/
+## API Documentation
 
-    - This endpoint will load a paginated list of pokemon (15 per page) that is sorted by the id of the pokemon.
-    
-    
-2. /api/v1/pokemon/?name=
+[Click here for api documentation](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config)
 
-    - This endpoint takes an optional name parameter, which will search the database for pokemon that **contain** the string of 
-    characters in the search parameter. The results for this query will also be returned in a paginated list (15 per page)
-    that is sorted by the id of the pokemon.
-     
-      
-3. /api/v1/pokemon/import
-
-    - This endpoint will import all pokemon from a csv file. There are 553 pokemon in the file, and it will take around 35-40
-    seconds to do this. This endpoint will only import the pokemon once.
-      
-      
-4. /api/v1/pokemon/{pokemon_id}
-
-    - This endpoint will return the full details of a pokemon based on the number passed to the query string. If an api call is
-    made with an invalid pokemon_id, an HTTP status code 404 will be sent with an empty body.
-      
-    
-#### Sample JSON response for details of a specific pokemon
-```json5
-{
-    "id": 348,
-    "name": "Armaldo",
-    "types": [
-        "bug",
-        "rock"
-    ],
-    "height": 15.0,
-    "weight": 682.0,
-    "abilities": [
-        "swift-swim",
-        "battle-armor"
-    ],
-    "egg_groups": [
-        "water3"
-    ],
-    "stats": {
-        "hp": 75,
-        "speed": 45,
-        "attack": 125,
-        "defense": 100,
-        "special-attack": 70,
-        "special-defense": 80
-    },
-    "genus": "Plate Pokémon",
-    "description": "Armaldo is a Pokémon species that became extinct in\nprehistoric times. This Pokémon is said to have walked\non its hind legs, which would have been more convenient\nfor life on land."
-}
-```
+**This link will only work if the project is running on your local host**
