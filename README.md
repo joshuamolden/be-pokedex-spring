@@ -44,4 +44,4 @@ database information.
 
 [Click here for api documentation](http://localhost:8080/swagger-ui/index.html?configUrl=/api-docs/swagger-config)
 
-**This link will only work if the project is running on your local host**
+**This link will only work if the project is running on your local host on port 8080**

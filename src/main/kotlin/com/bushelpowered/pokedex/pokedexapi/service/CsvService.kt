@@ -22,15 +22,6 @@ class CsvService {
     @Autowired
     lateinit var pokemonService: PokemonService
 
-    @Autowired
-    lateinit var typeService: TypeService
-
-    @Autowired
-    lateinit var abilityService: AbilityService
-
-    @Autowired
-    lateinit var eggGroupService: EggGroupService
-
     fun importPokemon(objectMapper: ObjectMapper): Boolean {
         val csvFile = BufferedReader(FileReader("src/main/resources/csv/pokedex.csv"))
 
@@ -87,5 +78,3 @@ class CsvService {
             var genus: String? = null,
             var description: String? = null)
 }
-
-// for testing {"name": "test, "email": "test@gmail.com", "password": "testPassword"}

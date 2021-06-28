@@ -13,11 +13,6 @@ data class PokemonEntity(
         val id: Int? = null,
         val name: String,
         @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
-        @JoinTable(name = "captured_pokemon",
-                joinColumns = [(JoinColumn(name = "trainer_id", referencedColumnName = "id"))],
-                inverseJoinColumns = [(JoinColumn(name = "poke_id", referencedColumnName = "id"))])
-        val trainers: List<TrainerEntity>? = null,
-        @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
         @Fetch(value = FetchMode.SUBSELECT)
         @JoinTable(
                 name = "pokemon_types",

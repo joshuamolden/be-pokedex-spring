@@ -1,5 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.controller
 
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.CapturePokemonRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.NewTrainerRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.toDomain
@@ -71,10 +72,11 @@ class TrainerController(private val trainerService: TrainerService) {
         return ResponseEntity(TrainerLogout(message = "Successfully logged out"), HttpStatus.OK)
     }
 
-//    @PostMapping("capture")
-//    fun capturePokemon(@RequestBody pokemonId: CapturePokemonRequest) : ResponseEntity<CapturePokemonResponse> {
-//        val pokemon =
-//    }
+    @PostMapping("capture")
+    fun capturePokemon(@RequestBody captureRequest: CapturePokemonRequest, @CookieValue("jwt") jwt: String?) : ResponseEntity<CapturePokemonResponse> {
+        val jwtClaims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
+        return ResponseEntity.ok(trainerService.trainerCapturesPokemon(captureRequest.pokemonId, jwtClaims.issuer))
+    }
 
     private final val TEN_HOURS = 60 * 10 * 1000
     private final val SECRET_KEY = "secret"

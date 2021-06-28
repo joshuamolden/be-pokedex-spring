@@ -8,13 +8,17 @@ import javax.persistence.*
 data class CapturedPokemonEntity (
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Int,
-        val trainer_id: Int,
-        val poke_id: Int,
+        val id: Int? = null,
+        @ManyToOne
+        @JoinColumn(name = "trainer_id")
+        val trainer: TrainerEntity,
+        @ManyToOne
+        @JoinColumn(name = "poke_id")
+        val pokemon: PokemonEntity,
         )
 
 fun CapturedPokemonEntity.toDomain(): CapturedPokemon = CapturedPokemon(
         id = this.id,
-        trainer_id = this.trainer_id,
-        poke_id = this.poke_id
+        trainer = this.trainer.toDomain(),
+        pokemon = this.pokemon.toDomain()
 )

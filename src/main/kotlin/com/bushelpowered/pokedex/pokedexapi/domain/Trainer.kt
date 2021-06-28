@@ -15,8 +15,7 @@ fun Trainer.toEntity(): TrainerEntity = TrainerEntity(
         id = this.id,
         name = this.name,
         email = this.email,
-        password = this.password,
-        pokemon_list = this.pokemon_list.map { pokemon -> pokemon.toEntity() }
+        password = this.password
 )
 
 fun Trainer.toResponse(): TrainerResponse = TrainerResponse(
