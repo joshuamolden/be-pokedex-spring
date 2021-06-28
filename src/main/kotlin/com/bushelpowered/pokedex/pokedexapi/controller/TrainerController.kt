@@ -8,6 +8,9 @@ import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.*
 import com.bushelpowered.pokedex.pokedexapi.service.TrainerService
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -76,6 +79,15 @@ class TrainerController(private val trainerService: TrainerService) {
     fun capturePokemon(@RequestBody captureRequest: CapturePokemonRequest, @CookieValue("jwt") jwt: String?) : ResponseEntity<CapturePokemonResponse> {
         val jwtClaims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
         return ResponseEntity.ok(trainerService.trainerCapturesPokemon(captureRequest.pokemonId, jwtClaims.issuer))
+    }
+
+    @GetMapping("captured")
+    fun capturedPokemon(
+            @PageableDefault(sort = ["id"], value = 15) pageable: Pageable,
+            @CookieValue("jwt") jwt: String?
+    ): ResponseEntity<Page<PokemonListResponse?>> {
+        val jwtClaims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
+        return ResponseEntity.ok(trainerService.getAllCapturedPokemon(pageable, jwtClaims.issuer))
     }
 
     private final val TEN_HOURS = 60 * 10 * 1000

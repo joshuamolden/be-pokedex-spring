@@ -3,8 +3,10 @@ package com.bushelpowered.pokedex.pokedexapi.service
 import com.bushelpowered.pokedex.pokedexapi.domain.Trainer
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.CapturePokemonResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.toEntity
+import com.bushelpowered.pokedex.pokedexapi.domain.toListResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.toResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.CapturedPokemonEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
@@ -12,6 +14,8 @@ import com.bushelpowered.pokedex.pokedexapi.persistence.repository.CapturedPokem
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.PokemonRepository
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.TrainerRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
@@ -51,5 +55,10 @@ class TrainerService {
         val pokemon = pokemonRepository.findById(pokemonId).get()
         val trainer = trainerRepository.findByEmail(trainerEmail) ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Trainer not found")
         return capturedPokemonRepository.save(CapturedPokemonEntity(trainer = trainer, pokemon = pokemon)).toDomain().toResponse()
+    }
+
+    fun getAllCapturedPokemon(pageable: Pageable, trainerEmail: String): Page<PokemonListResponse?> {
+        val trainerId: Int = trainerRepository.findByEmail(trainerEmail)?.id!!
+        return capturedPokemonRepository.findByTrainerId(pageable, trainerId).map { it?.toDomain()?.pokemon?.toListResponse() }
     }
 }
