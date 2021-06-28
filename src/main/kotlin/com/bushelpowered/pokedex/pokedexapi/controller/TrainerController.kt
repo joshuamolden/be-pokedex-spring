@@ -86,8 +86,11 @@ class TrainerController(private val trainerService: TrainerService) {
             @PageableDefault(sort = ["id"], value = 15) pageable: Pageable,
             @CookieValue("jwt") jwt: String?
     ): ResponseEntity<Page<PokemonListResponse?>> {
-        val jwtClaims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
-        return ResponseEntity.ok(trainerService.getAllCapturedPokemon(pageable, jwtClaims.issuer))
+        return if (jwt.isNullOrBlank()) ResponseEntity.badRequest().body(Page.empty())
+        else {
+            val jwtClaims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
+            ResponseEntity.ok(trainerService.getAllCapturedPokemon(pageable, jwtClaims.issuer))
+        }
     }
 
     private final val TEN_HOURS = 60 * 10 * 1000
