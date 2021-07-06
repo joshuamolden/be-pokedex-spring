@@ -14,6 +14,7 @@ import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.CapturedPokemonRepository
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.PokemonRepository
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.TrainerRepository
+import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -66,4 +67,10 @@ class TrainerService {
         val trainerId: Int = trainerRepository.findByEmail(trainerEmail)?.id!!
         return capturedPokemonRepository.findByTrainerId(pageable, trainerId).map { it?.toDomain()?.pokemon?.toListResponse() }
     }
+
+    fun jwtParser(jwt: String): String {
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body.issuer
+    }
+
+    private final val SECRET_KEY = "secret"
 }

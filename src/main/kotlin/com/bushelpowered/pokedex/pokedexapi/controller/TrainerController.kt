@@ -79,8 +79,11 @@ class TrainerController(private val trainerService: TrainerService) {
             @PathVariable pokemon_id: Int,
             @CookieValue("jwt") jwt: String?
     ): ResponseEntity<CapturePokemonResponse> {
-        val jwtClaims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
-        return ResponseEntity.ok(trainerService.trainerCapturesPokemon(pokemon_id, jwtClaims.issuer))
+        return when (jwt) {
+            null -> ResponseEntity.badRequest().body(CapturePokemonResponse("You must be signed in to capture pokemon", null))
+            else -> if (pokemon_id > 553) ResponseEntity.badRequest().body(CapturePokemonResponse("Pokemon doesn't exist", null))
+                    else ResponseEntity.ok(trainerService.trainerCapturesPokemon(pokemon_id, trainerService.jwtParser(jwt)))
+        }
     }
 
     @GetMapping("/captured")
@@ -90,8 +93,8 @@ class TrainerController(private val trainerService: TrainerService) {
     ): ResponseEntity<Page<PokemonListResponse?>> {
         return if (jwt.isNullOrBlank()) ResponseEntity.badRequest().body(Page.empty())
         else {
-            val jwtClaims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
-            ResponseEntity.ok(trainerService.getAllCapturedPokemon(pageable, jwtClaims.issuer))
+            val trainerEmail = trainerService.jwtParser(jwt)
+            ResponseEntity.ok(trainerService.getAllCapturedPokemon(pageable, trainerEmail))
         }
     }
 
