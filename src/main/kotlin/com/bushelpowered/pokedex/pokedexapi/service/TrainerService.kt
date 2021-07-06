@@ -51,10 +51,13 @@ class TrainerService {
         return BCryptPasswordEncoder().matches(trainer.password, trainerRepository.findByEmail(trainer.email)!!.password)   // wont be null if in this block
     }
 
-    fun trainerCapturesPokemon(pokemonId: Int, trainerEmail: String): CapturePokemonResponse {
+    fun trainerCapturesPokemon(pokemonId: Int, trainerEmail: String): CapturePokemonResponse? {
         val pokemon = pokemonRepository.findById(pokemonId).get()
         val trainer = trainerRepository.findByEmail(trainerEmail) ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Trainer not found")
-        return capturedPokemonRepository.save(CapturedPokemonEntity(trainer = trainer, pokemon = pokemon)).toDomain().toResponse()
+        return when (capturedPokemonRepository.checkIfCaptured(trainer.id!!, pokemonId)?.toDomain()?.toResponse()) {
+            null -> capturedPokemonRepository.save(CapturedPokemonEntity(trainer = trainer, pokemon = pokemon)).toDomain().toResponse()
+            else -> CapturePokemonResponse("Pokemon already caught", pokemon.toDomain())
+        }
     }
 
     fun getAllCapturedPokemon(pageable: Pageable, trainerEmail: String): Page<PokemonListResponse?> {
