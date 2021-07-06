@@ -12,25 +12,15 @@ import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.PokemonRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
-class PokemonService {
-
-    @Autowired
-    lateinit var pokemonRepository: PokemonRepository
-
-    @Autowired
-    lateinit var abilityService: AbilityService
-
-    @Autowired
-    lateinit var eggGroupService: EggGroupService
-
-    @Autowired
-    lateinit var typeService: TypeService
+class PokemonService(val pokemonRepository: PokemonRepository,
+                     val abilityService: AbilityService,
+                     val eggGroupService: EggGroupService,
+                     val typeService: TypeService) {
 
     // will check if pokemon exits already before creating pokemon
     fun createPokemon(pokemon: Pokemon): PokemonResponse? {
@@ -52,5 +42,10 @@ class PokemonService {
     fun getPokemonById(id: Int): PokemonResponse? {
         val result = pokemonRepository.findById(id)
         return if (result.isPresent) result.get().toDomain().toResponse() else null
+    }
+
+    fun getPokemonByImage(image: String): String? {
+        val result = pokemonRepository.findByImage(image)
+        return result?.toDomain()?.image
     }
 }

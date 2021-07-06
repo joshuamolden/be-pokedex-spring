@@ -17,5 +17,6 @@
     <include relativeToChangelogFile="true" file="/actions/create-pokemon-types-join-table.xml"/> <!-- 7 -->
     <include relativeToChangelogFile="true" file="/actions/create-trainer-table.xml"/> <!-- 8 -->
     <include relativeToChangelogFile="true" file="/actions/create-captured-pokemon-join-table.xml"/> <!-- 9 -->
+    <include relativeToChangelogFile="true" file="/actions/add-image-to-pokemon-table.xml"/> <!-- 10 -->
 
 </databaseChangeLog>

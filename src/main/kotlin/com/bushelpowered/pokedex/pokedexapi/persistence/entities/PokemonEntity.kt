@@ -12,6 +12,7 @@ data class PokemonEntity(
         @Id
         val id: Int? = null,
         val name: String,
+        val image: String?,
         @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.MERGE])
         @Fetch(value = FetchMode.SUBSELECT)
         @JoinTable(
@@ -51,6 +52,7 @@ data class PokemonEntity(
 fun PokemonEntity.toDomain(): Pokemon = Pokemon(
         id = this.id,
         name = this.name,
+        image = this.image,
         types = this.types.map { typeEntity -> typeEntity.toDomain() },
         height = this.height,
         weight = this.weight,

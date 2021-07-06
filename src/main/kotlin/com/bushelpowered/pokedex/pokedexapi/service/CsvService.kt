@@ -38,6 +38,7 @@ class CsvService {
                         Pokemon(
                                 id = it.id,
                                 name = it.name ?: "",
+                                image = "https://intern-pokedex.myriadapps.com/images/pokemon/${it.id}.png",
                                 types = objectMapper.readTree(it.types).map { type -> TypeEntity(name = type.toString().replace("\"", "")).toDomain() },
                                 height = it.height ?: 0.0,
                                 weight = it.weight ?: 0.0,

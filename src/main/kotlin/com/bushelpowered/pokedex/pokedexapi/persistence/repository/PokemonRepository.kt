@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository
 interface PokemonRepository : JpaRepository<PokemonEntity, Int> {
     fun findByNameContaining(name: String, pageable: Pageable): Page<PokemonEntity?>
     fun findByName(name: String): PokemonEntity?
+    fun findByImage(image: String): PokemonEntity?
 }
