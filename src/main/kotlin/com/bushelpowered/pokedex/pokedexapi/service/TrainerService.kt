@@ -43,7 +43,7 @@ class TrainerService {
                         password = passwordEncoder.encode(newTrainer.password)).toEntity()).toDomain().toResponse()
     }
 
-    fun findTrainerByEmail(email: String) : TrainerResponse? {
+    fun findTrainerByEmail(email: String): TrainerResponse? {
         return trainerRepository.findByEmail(email)?.toDomain()?.toResponse()
     }
 
@@ -53,7 +53,8 @@ class TrainerService {
 
     fun trainerCapturesPokemon(pokemonId: Int, trainerEmail: String): CapturePokemonResponse? {
         val pokemon = pokemonRepository.findById(pokemonId).get()
-        val trainer = trainerRepository.findByEmail(trainerEmail) ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Trainer not found")
+        val trainer = trainerRepository.findByEmail(trainerEmail)
+                ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Trainer not found")
         return when (capturedPokemonRepository.checkIfCaptured(trainer.id!!, pokemonId)?.toDomain()?.toResponse()) {
             null -> capturedPokemonRepository.save(CapturedPokemonEntity(trainer = trainer, pokemon = pokemon)).toDomain().toResponse()
             else -> CapturePokemonResponse("Pokemon already caught", pokemon.toDomain())

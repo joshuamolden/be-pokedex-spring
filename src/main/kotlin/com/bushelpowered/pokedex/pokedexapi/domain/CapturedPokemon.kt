@@ -3,11 +3,11 @@ package com.bushelpowered.pokedex.pokedexapi.domain
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.CapturePokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.CapturedPokemonEntity
 
-data class CapturedPokemon (
+data class CapturedPokemon(
         val id: Int? = null,
         val trainer: Trainer,
         val pokemon: Pokemon
-        )
+)
 
 fun CapturedPokemon.toEntity(): CapturedPokemonEntity = CapturedPokemonEntity(
         id = this.id,

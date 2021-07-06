@@ -9,8 +9,9 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 @Repository
-interface CapturedPokemonRepository: JpaRepository<CapturedPokemonEntity, Int> {
+interface CapturedPokemonRepository : JpaRepository<CapturedPokemonEntity, Int> {
     fun findByTrainerId(pageable: Pageable, trainerId: Int): Page<CapturedPokemonEntity?>
+
     @Query("select c from CapturedPokemonEntity c where c.trainer.id = :trainerId and c.pokemon.id = :pokemonId")
-    fun checkIfCaptured(@Param("trainerId")trainerId: Int, @Param("pokemonId")pokemonId: Int): CapturedPokemonEntity?
+    fun checkIfCaptured(@Param("trainerId") trainerId: Int, @Param("pokemonId") pokemonId: Int): CapturedPokemonEntity?
 }

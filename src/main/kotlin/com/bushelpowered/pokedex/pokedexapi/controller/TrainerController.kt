@@ -78,7 +78,7 @@ class TrainerController(private val trainerService: TrainerService) {
     fun capturePokemon(
             @PathVariable pokemon_id: Int,
             @CookieValue("jwt") jwt: String?
-    ) : ResponseEntity<CapturePokemonResponse> {
+    ): ResponseEntity<CapturePokemonResponse> {
         val jwtClaims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
         return ResponseEntity.ok(trainerService.trainerCapturesPokemon(pokemon_id, jwtClaims.issuer))
     }

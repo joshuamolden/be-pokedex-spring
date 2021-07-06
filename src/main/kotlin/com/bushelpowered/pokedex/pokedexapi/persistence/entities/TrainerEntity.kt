@@ -1,8 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
 import com.bushelpowered.pokedex.pokedexapi.domain.Trainer
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 import javax.persistence.*
 
 @Entity

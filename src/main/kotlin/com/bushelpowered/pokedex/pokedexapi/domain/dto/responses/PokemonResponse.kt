@@ -1,7 +1,5 @@
 package com.bushelpowered.pokedex.pokedexapi.domain.dto
 
-import com.bushelpowered.pokedex.pokedexapi.domain.*
-
 data class PokemonResponse(
         val id: Int,
         val name: String,

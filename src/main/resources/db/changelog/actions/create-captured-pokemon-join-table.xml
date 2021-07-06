@@ -21,7 +21,8 @@
         <createIndex tableName="captured_pokemon" indexName="captured_pokemon_id_index" unique="true">
             <column name="id"/>
         </createIndex>
-        <addAutoIncrement tableName="captured_pokemon" columnName="id" startWith="1" incrementBy="1" columnDataType="Int"/>
+        <addAutoIncrement tableName="captured_pokemon" columnName="id" startWith="1" incrementBy="1"
+                          columnDataType="Int"/>
         <addForeignKeyConstraint baseTableName="captured_pokemon" baseColumnNames="trainer_id"
                                  constraintName="foreign_key_from_trainer"
                                  referencedTableName="trainer" referencedColumnNames="id"/>
