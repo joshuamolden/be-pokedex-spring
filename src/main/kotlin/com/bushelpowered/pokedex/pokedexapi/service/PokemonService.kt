@@ -1,12 +1,12 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
-import com.bushelpowered.pokedex.pokedexapi.domain.Pokemon
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Pokemon
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.toDomain
-import com.bushelpowered.pokedex.pokedexapi.domain.toEntity
-import com.bushelpowered.pokedex.pokedexapi.domain.toListResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.toResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.models.toEntity
+import com.bushelpowered.pokedex.pokedexapi.domain.models.toListResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.models.toResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.AbilityEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity

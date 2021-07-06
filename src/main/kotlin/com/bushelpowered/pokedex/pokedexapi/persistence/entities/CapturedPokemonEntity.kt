@@ -1,6 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
-import com.bushelpowered.pokedex.pokedexapi.domain.CapturedPokemon
+import com.bushelpowered.pokedex.pokedexapi.domain.models.CapturedPokemon
 import javax.persistence.*
 
 @Entity

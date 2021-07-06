@@ -1,6 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
-import com.bushelpowered.pokedex.pokedexapi.domain.Trainer
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Trainer
 import javax.persistence.*
 
 @Entity

@@ -1,7 +1,7 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
-import com.bushelpowered.pokedex.pokedexapi.domain.Pokemon
-import com.bushelpowered.pokedex.pokedexapi.domain.Stats
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Pokemon
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Stats
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import javax.persistence.*

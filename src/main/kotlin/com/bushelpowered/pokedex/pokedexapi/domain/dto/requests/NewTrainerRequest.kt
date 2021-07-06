@@ -1,6 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.domain.dto.requests
 
-import com.bushelpowered.pokedex.pokedexapi.domain.Trainer
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Trainer
 
 data class NewTrainerRequest(
         val name: String,

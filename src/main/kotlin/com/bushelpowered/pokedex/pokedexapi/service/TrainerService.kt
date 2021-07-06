@@ -1,13 +1,13 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
-import com.bushelpowered.pokedex.pokedexapi.domain.Trainer
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Trainer
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.CapturePokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.toEntity
-import com.bushelpowered.pokedex.pokedexapi.domain.toListResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.toResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.models.toEntity
+import com.bushelpowered.pokedex.pokedexapi.domain.models.toListResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.models.toResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.CapturedPokemonEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.CapturedPokemonRepository

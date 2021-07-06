@@ -1,4 +1,4 @@
-package com.bushelpowered.pokedex.pokedexapi.domain
+package com.bushelpowered.pokedex.pokedexapi.domain.models
 
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse

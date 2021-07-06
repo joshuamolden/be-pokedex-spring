@@ -1,7 +1,7 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
-import com.bushelpowered.pokedex.pokedexapi.domain.Pokemon
-import com.bushelpowered.pokedex.pokedexapi.domain.Stats
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Pokemon
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Stats
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.AbilityEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity

@@ -1,6 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.domain.dto.responses
 
-import com.bushelpowered.pokedex.pokedexapi.domain.EggGroup
+import com.bushelpowered.pokedex.pokedexapi.domain.models.EggGroup
 
 data class EggGroupResponse(
         val id: Int? = null,
