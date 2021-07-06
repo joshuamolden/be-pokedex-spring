@@ -75,13 +75,16 @@ class TrainerController(private val trainerService: TrainerService) {
         return ResponseEntity(TrainerLogout(message = "Successfully logged out"), HttpStatus.OK)
     }
 
-    @PostMapping("capture")
-    fun capturePokemon(@RequestBody captureRequest: CapturePokemonRequest, @CookieValue("jwt") jwt: String?) : ResponseEntity<CapturePokemonResponse> {
+    @PostMapping("/capture/{pokemon_id}")
+    fun capturePokemon(
+            @PathVariable pokemon_id: Int,
+            @CookieValue("jwt") jwt: String?
+    ) : ResponseEntity<CapturePokemonResponse> {
         val jwtClaims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
-        return ResponseEntity.ok(trainerService.trainerCapturesPokemon(captureRequest.pokemonId, jwtClaims.issuer))
+        return ResponseEntity.ok(trainerService.trainerCapturesPokemon(pokemon_id, jwtClaims.issuer))
     }
 
-    @GetMapping("captured")
+    @GetMapping("/captured")
     fun capturedPokemon(
             @PageableDefault(sort = ["id"], value = 15) pageable: Pageable,
             @CookieValue("jwt") jwt: String?

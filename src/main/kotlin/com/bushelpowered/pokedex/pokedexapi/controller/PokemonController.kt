@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/pokemon")
-class PokemonConrtoller(val pokemonService: PokemonService,
+class PokemonController(val pokemonService: PokemonService,
                         val csvService: CsvService) {
 
     // imports pokemon once
@@ -41,7 +41,6 @@ class PokemonConrtoller(val pokemonService: PokemonService,
             @PathVariable pokemon_id: Int
     ): ResponseEntity<PokemonResponse>? {
         val returnPokemon = pokemonService.getPokemonById(pokemon_id)
-//        val httpCode = if (returnPokemon!!.equals(null)) HttpStatus.OK else HttpStatus.NOT_FOUND      can't figure out how to make if function like the when block of code
         val httpCode = when (returnPokemon) {
             null -> HttpStatus.NOT_FOUND
             else -> HttpStatus.OK
