@@ -1,6 +1,5 @@
 package com.bushelpowered.pokedex.pokedexapi.controller
 
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.CapturePokemonRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.NewTrainerRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.toDomain
