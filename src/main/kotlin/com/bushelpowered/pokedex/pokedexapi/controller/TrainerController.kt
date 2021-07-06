@@ -24,7 +24,7 @@ class TrainerController(private val trainerService: TrainerService) {
     @PostMapping("/register")
     fun registerNewTrainer(@RequestBody newTrainer: NewTrainerRequest): ResponseEntity<BaseTrainerResponse> {
         return when (trainerService.findTrainerByEmail(newTrainer.email)) {
-            null -> ResponseEntity.ok(trainerService.addTrainer(newTrainer.toDomain()))
+            null -> ResponseEntity.ok(trainerService.addTrainer(newTrainer))
             else -> ResponseEntity.badRequest().body(TrainerErrorResponse(message = "Email already exists", email = newTrainer.email))
         }
     }

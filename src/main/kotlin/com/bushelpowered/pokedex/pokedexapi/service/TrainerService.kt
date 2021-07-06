@@ -1,5 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.NewTrainerRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.CapturePokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
@@ -35,8 +36,8 @@ class TrainerService {
 
     private val passwordEncoder = BCryptPasswordEncoder()
 
-    fun addTrainer(newTrainer: Trainer): TrainerResponse {
-        return trainerRepository.findByEmail(newTrainer.email)?.toDomain()?.toResponse() ?: trainerRepository.save(
+    fun addTrainer(newTrainer: NewTrainerRequest): TrainerResponse {
+        return trainerRepository.findByEmail(newTrainer.email)?.toResponse() ?: trainerRepository.save(
                 Trainer(
                         name = newTrainer.name,
                         email = newTrainer.email,
@@ -44,11 +45,11 @@ class TrainerService {
     }
 
     fun findTrainerByEmail(email: String): TrainerResponse? {
-        return trainerRepository.findByEmail(email)?.toDomain()?.toResponse()
+        return trainerRepository.findByEmail(email)?.toResponse()
     }
 
     fun comparePassword(trainer: TrainerLoginRequest): Boolean {
-        return BCryptPasswordEncoder().matches(trainer.password, trainerRepository.findByEmail(trainer.email)!!.password)   // wont be null if in this block
+        return BCryptPasswordEncoder().matches(trainer.password, trainerRepository.findByEmail(trainer.email)!!.password)   // wont be null if comparing passwords
     }
 
     fun trainerCapturesPokemon(pokemonId: Int, trainerEmail: String): CapturePokemonResponse? {
@@ -56,7 +57,7 @@ class TrainerService {
         val trainer = trainerRepository.findByEmail(trainerEmail)
                 ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Trainer not found")
         return when (capturedPokemonRepository.checkIfCaptured(trainer.id!!, pokemonId)?.toDomain()?.toResponse()) {
-            null -> capturedPokemonRepository.save(CapturedPokemonEntity(trainer = trainer, pokemon = pokemon)).toDomain().toResponse()
+            null -> capturedPokemonRepository.save(CapturedPokemonEntity(trainer = trainer.toEntity(), pokemon = pokemon)).toDomain().toResponse()
             else -> CapturePokemonResponse("Pokemon already caught", pokemon.toDomain())
         }
     }

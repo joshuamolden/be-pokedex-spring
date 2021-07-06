@@ -32,10 +32,7 @@ class CsvService {
                     .build()
 
             val pokemonEntities = fromCsvToBean.parse()
-//            fun parseStat(statType: String, it: PokemonFromCsv): Int {
-//                return jacksonObjectMapper().readTree(it.["stats"])[statType].toString().toInt()      tyring to figure out how to make helper method for stats
-//            }
-            // takes about 35-40 seconds to add all info to db, is this too much time?
+            // takes about 35-40 seconds to add all info to db
             pokemonEntities.forEach {
                 pokemonService.createPokemon(
                         Pokemon(
