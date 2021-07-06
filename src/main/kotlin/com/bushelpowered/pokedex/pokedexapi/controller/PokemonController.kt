@@ -14,19 +14,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/pokemon")
-class PokemonController(val pokemonService: PokemonService,
-                        val csvService: CsvService) {
-
-    // imports pokemon once
-    @PostMapping("/import")
-    fun importFromCsv(): ResponseEntity<String> {
-        var httpCode = HttpStatus.OK
-        when (pokemonService.getPokemonById(1)) {
-            null -> csvService.importPokemon(ObjectMapper())
-            else -> httpCode = HttpStatus.BAD_REQUEST
-        }
-        return ResponseEntity("Pokemon already imported", httpCode)
-    }
+class PokemonController(val pokemonService: PokemonService) {
 
     @GetMapping("/")
     fun loadAllPokemon(
