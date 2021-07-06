@@ -15,6 +15,7 @@ import com.bushelpowered.pokedex.pokedexapi.persistence.repository.CapturedPokem
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.PokemonRepository
 import com.bushelpowered.pokedex.pokedexapi.persistence.repository.TrainerRepository
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -22,6 +23,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
+import java.util.*
+import javax.servlet.http.Cookie
 
 @Service
 class TrainerService {
@@ -72,5 +75,15 @@ class TrainerService {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body.issuer
     }
 
+    fun createJwt(email: String): Cookie {
+        val jwt = Jwts.builder()
+                .setIssuer(email)
+                .setExpiration(Date(System.currentTimeMillis() + TEN_HOURS))
+                .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact()
+
+        return Cookie("jwt", jwt)
+    }
+
+    private final val TEN_HOURS = 60 * 10 * 1000
     private final val SECRET_KEY = "secret"
 }
