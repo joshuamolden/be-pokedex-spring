@@ -7,8 +7,7 @@ data class Trainer(
         val id: Int? = null,
         val name: String = "",
         val email: String,
-        val password: String,
-        val pokemon_list: List<Pokemon> = listOf()
+        val password: String
 )
 
 fun Trainer.toEntity(): TrainerEntity = TrainerEntity(

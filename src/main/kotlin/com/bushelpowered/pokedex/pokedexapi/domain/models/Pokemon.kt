@@ -36,7 +36,7 @@ fun Pokemon.toEntity(): PokemonEntity = PokemonEntity(
 )
 
 fun Pokemon.toResponse(): PokemonResponse = PokemonResponse(
-        id = this.id!!, // !! means id will not be null
+        id = this.id!!,
         name = this.name,
         types = this.types.map { type -> type.name },
         height = this.height,
