@@ -1,6 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.controller
 
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.service.PokemonService
 import org.springframework.data.domain.Page
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1/pokemon")
 class PokemonController(val pokemonService: PokemonService) {
 
+    // loads all pokemon, or pokemon based on search criterion
     @GetMapping("/")
     fun loadAllPokemon(
             @RequestParam("name") name: String?,

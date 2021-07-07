@@ -1,13 +1,8 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.toDomain
 import com.bushelpowered.pokedex.pokedexapi.domain.models.*
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
-import com.bushelpowered.pokedex.pokedexapi.persistence.daos.PokemonDao
 import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.PokemonRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -39,7 +34,8 @@ class PokemonService(val pokemonRepository: PokemonRepository,
     }
 
     fun getPokemonById(id: Int): PokemonResponse? {
-        val result = pokemonRepository.findById(id) ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Pokemon doesn't exist")
+        val result = pokemonRepository.findById(id)
+                ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Pokemon doesn't exist")
         return result.toResponse()
     }
 

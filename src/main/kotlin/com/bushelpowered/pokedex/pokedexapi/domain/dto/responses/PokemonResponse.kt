@@ -1,4 +1,4 @@
-package com.bushelpowered.pokedex.pokedexapi.domain.dto
+package com.bushelpowered.pokedex.pokedexapi.domain.dto.responses
 
 data class PokemonResponse(
         val id: Int,

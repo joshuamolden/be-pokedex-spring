@@ -72,7 +72,7 @@ class TrainerController(private val trainerService: TrainerService) {
     }
 
     @GetMapping("/captured")
-    fun capturedPokemon(
+    fun listCapturedPokemon(
             @PageableDefault(sort = ["id"], value = 15) pageable: Pageable,
             @CookieValue("jwt") jwt: String?
     ): ResponseEntity<Page<PokemonListResponse?>> {

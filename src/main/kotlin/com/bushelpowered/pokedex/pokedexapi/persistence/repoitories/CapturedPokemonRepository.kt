@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class CapturedPokemonRepository(val dao: CapturedPokemonDao) {
+
     fun findById(pageable: Pageable, trainerId: Int): Page<CapturedPokemon?> {
         return dao.findByTrainerId(pageable, trainerId).map { it?.toDomain() }
     }

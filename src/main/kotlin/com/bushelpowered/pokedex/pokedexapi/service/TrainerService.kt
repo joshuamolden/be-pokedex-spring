@@ -5,9 +5,10 @@ import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequ
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.CapturePokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.models.*
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
-import com.bushelpowered.pokedex.pokedexapi.persistence.daos.TrainerDao
+import com.bushelpowered.pokedex.pokedexapi.domain.models.CapturedPokemon
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Trainer
+import com.bushelpowered.pokedex.pokedexapi.domain.models.toListResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.models.toResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.CapturedPokemonRepository
 import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.PokemonRepository
 import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.TrainerRepository
@@ -54,7 +55,8 @@ class TrainerService {
     }
 
     fun trainerCapturesPokemon(pokemonId: Int, trainerEmail: String): CapturePokemonResponse? {
-        val pokemon = pokemonRepository.findById(pokemonId) ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Pokemon doesn't exist")
+        val pokemon = pokemonRepository.findById(pokemonId)
+                ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Pokemon doesn't exist")
         val trainer = trainerRepository.findByEmail(trainerEmail)
                 ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Trainer not found")
         return when (capturedPokemonRepository.checkIfCaptured(trainer.id!!, pokemonId)?.toResponse()) {
@@ -81,6 +83,7 @@ class TrainerService {
         return Cookie("jwt", jwt)
     }
 
+    // store elsewhere
     private final val TEN_HOURS = 60 * 60 * 10 * 1000 // 1000 miliseconds = 1 second
     private final val SECRET_KEY = "secret"
 }

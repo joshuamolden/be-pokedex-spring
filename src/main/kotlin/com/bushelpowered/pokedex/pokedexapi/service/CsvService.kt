@@ -32,7 +32,6 @@ class CsvService {
                     .build()
 
             val pokemonEntities = fromCsvToBean.parse()
-            // takes about 35-40 seconds to add all info to db
             pokemonEntities.forEach {
                 pokemonService.createPokemon(
                         Pokemon(
@@ -64,7 +63,6 @@ class CsvService {
     }
 
     data class PokemonFromCsv(
-            // values need to be var in order to parse from csv file
             var id: Int? = null,
             var name: String? = null,
             var types: String? = null,

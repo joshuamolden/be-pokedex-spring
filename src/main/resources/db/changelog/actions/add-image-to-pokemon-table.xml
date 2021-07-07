@@ -9,8 +9,8 @@
     <changeSet id="add-image-to-pokemon-table" author="jmolden">
         <addColumn tableName="pokemon">
             <column name="image"
-                afterColumn="name"
-                type="varchar(150)"/>
+                    afterColumn="name"
+                    type="varchar(150)"/>
         </addColumn>
     </changeSet>
 
