@@ -1,7 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
-import com.bushelpowered.pokedex.pokedexapi.domain.models.Pokemon
-import com.bushelpowered.pokedex.pokedexapi.domain.models.Stats
+import com.bushelpowered.pokedex.pokedexapi.domain.models.*
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.AbilityEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity
@@ -34,11 +33,11 @@ class CsvService(val pokemonService: PokemonService) {
                                 id = it.id,
                                 name = it.name ?: "",
                                 image = "https://intern-pokedex.myriadapps.com/images/pokemon/${it.id}.png",
-                                types = objectMapper.readTree(it.types).map { type -> TypeEntity(name = type.toString().replace("\"", "")).toDomain() },
+                                types = objectMapper.readTree(it.types).map { type -> Type(name = type.toString().replace("\"", "")) },
                                 height = it.height ?: 0.0,
                                 weight = it.weight ?: 0.0,
-                                abilities = objectMapper.readTree(it.abilities).map { ability -> AbilityEntity(name = ability.toString().replace("\"", "")).toDomain() },
-                                egg_groups = objectMapper.readTree(it.egg_groups).map { egg_group -> EggGroupEntity(name = egg_group.toString().replace("\"", "")).toDomain() },
+                                abilities = objectMapper.readTree(it.abilities).map { ability -> Ability(name = ability.toString().replace("\"", "")) },
+                                egg_groups = objectMapper.readTree(it.egg_groups).map { egg_group -> EggGroup(name = egg_group.toString().replace("\"", "")) },
                                 stats = Stats(
                                         hp = objectMapper.readTree(it.stats)["hp"].toString().toInt(),
                                         speed = objectMapper.readTree(it.stats)["speed"].toString().toInt(),
