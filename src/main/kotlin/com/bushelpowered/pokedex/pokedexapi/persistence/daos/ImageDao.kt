@@ -1,4 +1,4 @@
-package com.bushelpowered.pokedex.pokedexapi.persistence.repository
+package com.bushelpowered.pokedex.pokedexapi.persistence.daos
 
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
 import org.springframework.data.jpa.repository.JpaRepository
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional
 @Repository
-interface ImageRepository : JpaRepository<PokemonEntity, Int> {
+interface ImageDao : JpaRepository<PokemonEntity, Int> {
     @Modifying
     @Query("update PokemonEntity p set p.image = :image where p.id = :id")
     fun updateImage(@Param("image") image: String, @Param("id") id: Int)

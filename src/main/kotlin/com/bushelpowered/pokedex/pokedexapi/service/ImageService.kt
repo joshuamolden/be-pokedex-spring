@@ -1,7 +1,9 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
-import com.bushelpowered.pokedex.pokedexapi.persistence.repository.ImageRepository
-import com.bushelpowered.pokedex.pokedexapi.persistence.repository.PokemonRepository
+import com.bushelpowered.pokedex.pokedexapi.persistence.daos.ImageDao
+import com.bushelpowered.pokedex.pokedexapi.persistence.daos.PokemonDao
+import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.ImageRepository
+import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.PokemonRepository
 import org.springframework.stereotype.Service
 
 @Service

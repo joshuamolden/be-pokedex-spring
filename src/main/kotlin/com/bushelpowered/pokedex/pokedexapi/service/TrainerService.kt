@@ -5,15 +5,12 @@ import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequ
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.CapturePokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.TrainerResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.models.Trainer
-import com.bushelpowered.pokedex.pokedexapi.domain.models.toEntity
-import com.bushelpowered.pokedex.pokedexapi.domain.models.toListResponse
-import com.bushelpowered.pokedex.pokedexapi.domain.models.toResponse
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.CapturedPokemonEntity
+import com.bushelpowered.pokedex.pokedexapi.domain.models.*
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
-import com.bushelpowered.pokedex.pokedexapi.persistence.repository.CapturedPokemonRepository
-import com.bushelpowered.pokedex.pokedexapi.persistence.repository.PokemonRepository
-import com.bushelpowered.pokedex.pokedexapi.persistence.repository.TrainerRepository
+import com.bushelpowered.pokedex.pokedexapi.persistence.daos.TrainerDao
+import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.CapturedPokemonRepository
+import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.PokemonRepository
+import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.TrainerRepository
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,7 +42,7 @@ class TrainerService {
                 Trainer(
                         name = newTrainer.name,
                         email = newTrainer.email,
-                        password = passwordEncoder.encode(newTrainer.password)).toEntity()).toDomain().toResponse()
+                        password = passwordEncoder.encode(newTrainer.password))).toResponse()
     }
 
     fun findTrainerByEmail(email: String): TrainerResponse? {
@@ -57,18 +54,18 @@ class TrainerService {
     }
 
     fun trainerCapturesPokemon(pokemonId: Int, trainerEmail: String): CapturePokemonResponse? {
-        val pokemon = pokemonRepository.findById(pokemonId).get()
+        val pokemon = pokemonRepository.findById(pokemonId) ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Pokemon doesn't exist")
         val trainer = trainerRepository.findByEmail(trainerEmail)
                 ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Trainer not found")
-        return when (capturedPokemonRepository.checkIfCaptured(trainer.id!!, pokemonId)?.toDomain()?.toResponse()) {
-            null -> capturedPokemonRepository.save(CapturedPokemonEntity(trainer = trainer.toEntity(), pokemon = pokemon)).toDomain().toResponse()
-            else -> CapturePokemonResponse("Pokemon already caught", pokemon.toDomain())
+        return when (capturedPokemonRepository.checkIfCaptured(trainer.id!!, pokemonId)?.toResponse()) {
+            null -> capturedPokemonRepository.save(CapturedPokemon(trainer = trainer, pokemon = pokemon)).toResponse()
+            else -> CapturePokemonResponse("Pokemon already caught", pokemon)
         }
     }
 
     fun getAllCapturedPokemon(pageable: Pageable, trainerEmail: String): Page<PokemonListResponse?> {
         val trainerId: Int = trainerRepository.findByEmail(trainerEmail)?.id!!
-        return capturedPokemonRepository.findByTrainerId(pageable, trainerId).map { it?.toDomain()?.pokemon?.toListResponse() }
+        return capturedPokemonRepository.findById(pageable, trainerId).map { it?.pokemon?.toListResponse() }
     }
 
     fun jwtParser(jwt: String): String {
