@@ -9,7 +9,6 @@ import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.opencsv.bean.CsvToBean
 import com.opencsv.bean.CsvToBeanBuilder
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -17,10 +16,7 @@ import java.io.BufferedReader
 import java.io.FileReader
 
 @Service
-class CsvService {
-
-    @Autowired
-    lateinit var pokemonService: PokemonService
+class CsvService(val pokemonService: PokemonService) {
 
     fun importPokemon(objectMapper: ObjectMapper): Boolean {
         val csvFile = BufferedReader(FileReader("src/main/resources/csv/pokedex.csv"))

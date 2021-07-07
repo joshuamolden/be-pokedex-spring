@@ -14,7 +14,6 @@ import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.PokemonRepos
 import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.TrainerRepository
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -25,16 +24,9 @@ import java.util.*
 import javax.servlet.http.Cookie
 
 @Service
-class TrainerService {
-
-    @Autowired
-    lateinit var trainerRepository: TrainerRepository
-
-    @Autowired
-    lateinit var pokemonRepository: PokemonRepository
-
-    @Autowired
-    lateinit var capturedPokemonRepository: CapturedPokemonRepository
+class TrainerService(val trainerRepository: TrainerRepository,
+                     val pokemonRepository: PokemonRepository,
+                     val capturedPokemonRepository: CapturedPokemonRepository) {
 
     private val passwordEncoder = BCryptPasswordEncoder()
 
