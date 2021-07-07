@@ -84,6 +84,6 @@ class TrainerService {
         return Cookie("jwt", jwt)
     }
 
-    private final val TEN_HOURS = 60 * 10 * 1000
+    private final val TEN_HOURS = 60 * 60 * 10 * 1000 // 1000 miliseconds = 1 second
     private final val SECRET_KEY = "secret"
 }

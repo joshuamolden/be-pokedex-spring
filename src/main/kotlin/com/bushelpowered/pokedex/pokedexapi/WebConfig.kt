@@ -1,16 +1,21 @@
 package com.bushelpowered.pokedex.pokedexapi
 
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
 class WebConfig : WebMvcConfigurer {
-    override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**")  // every route will match this path name
-                .allowedOrigins("http://localhost:3000", "http://localhost:8080")   // allows frontend to receive request from backend when using react or vue.js
-                .allowCredentials(true) // allows frontend to receive cookie
+    @Bean
+    fun corsConfigurer(): WebMvcConfigurer? {
+        return object : WebMvcConfigurerAdapter() {
+            override fun addCorsMappings(registry: CorsRegistry) {
+                registry.addMapping("/**")
+            }
+        }
     }
 }
