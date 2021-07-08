@@ -1,7 +1,7 @@
 package com.bushelpowered.pokedex.pokedexapi.domain.models
 
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
 
 data class Pokemon(

@@ -1,7 +1,8 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.toDomain
 import com.bushelpowered.pokedex.pokedexapi.domain.models.*
 import com.bushelpowered.pokedex.pokedexapi.persistence.repoitories.PokemonRepository
 import org.springframework.data.domain.Page
@@ -20,9 +21,9 @@ class PokemonService(val pokemonRepository: PokemonRepository,
     fun createPokemon(pokemon: Pokemon): PokemonResponse? {
         return pokemonRepository.findByName(pokemon.name)?.toResponse()
                 ?: pokemonRepository.save(pokemon.copy(
-                        types = pokemon.types.map { type -> typeService.getOrAddType(Type(name = type.name)) },
-                        abilities = pokemon.abilities.map { ability -> abilityService.getOrAddAbility(Ability(name = ability.name)) },
-                        egg_groups = pokemon.egg_groups.map { egg_group -> eggGroupService.getOrAddEggGroup(EggGroup(name = egg_group.name)) }
+                        types = pokemon.types.map { type -> typeService.getOrAddType(Type(name = type.name)).toDomain() },
+                        abilities = pokemon.abilities.map { ability -> abilityService.getOrAddAbility(Ability(name = ability.name)).toDomain() },
+                        egg_groups = pokemon.egg_groups.map { egg_group -> eggGroupService.getOrAddEggGroup(EggGroup(name = egg_group.name)).toDomain() }
                 )).toResponse()
     }
 

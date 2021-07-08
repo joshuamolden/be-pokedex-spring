@@ -1,10 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
 import com.bushelpowered.pokedex.pokedexapi.domain.models.*
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.AbilityEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.opencsv.bean.CsvToBean
 import com.opencsv.bean.CsvToBeanBuilder
