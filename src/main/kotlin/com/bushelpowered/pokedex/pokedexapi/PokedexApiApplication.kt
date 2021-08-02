@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.web.bind.annotation.RestController
 
 @SpringBootApplication(exclude = [SecurityAutoConfiguration::class])
-@RestController
 @EnableJpaRepositories
 class PokedexApiApplication
 

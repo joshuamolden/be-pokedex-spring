@@ -24,7 +24,11 @@ class PokemonRepository(val dao: PokemonDao) {
     }
 
     fun findById(id: Int): Pokemon? {
-        return dao.findById(id).get().toDomain()
+        val pokemon = dao.findById(id)
+        return when (pokemon.isPresent) {
+            true -> pokemon.get().toDomain()
+            false -> null
+        }
     }
 
     fun save(pokemon: Pokemon): Pokemon {

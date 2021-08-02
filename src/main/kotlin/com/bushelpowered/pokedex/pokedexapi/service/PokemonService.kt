@@ -36,8 +36,7 @@ class PokemonService(val pokemonRepository: PokemonRepository,
 
     fun getPokemonById(id: Int): PokemonResponse? {
         val result = pokemonRepository.findById(id)
-                ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Pokemon doesn't exist")
-        return result.toResponse()
+        return result?.toResponse()
     }
 
     fun getPokemonByImage(image: String): String? {
