@@ -1,6 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.domain.dto.responses
 
-import com.bushelpowered.pokedex.pokedexapi.domain.Type
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Type
 
 data class TypeResponse(
         val id: Int? = null,

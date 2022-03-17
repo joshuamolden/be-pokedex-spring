@@ -1,12 +1,13 @@
-package com.bushelpowered.pokedex.pokedexapi.domain
+package com.bushelpowered.pokedex.pokedexapi.domain.models
 
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonListResponse
+import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.PokemonResponse
 import com.bushelpowered.pokedex.pokedexapi.persistence.entities.PokemonEntity
 
 data class Pokemon(
         val id: Int? = null,   // Int? allows id to be nullable, and '= null' sets the default value to null
         val name: String,
+        val image: String?,
         val types: List<Type>,
         val height: Double,
         val weight: Double,
@@ -20,6 +21,7 @@ data class Pokemon(
 fun Pokemon.toEntity(): PokemonEntity = PokemonEntity(
         id = this.id,
         name = this.name,
+        image = this.image,
         types = this.types.map { type -> type.toEntity() },
         height = this.height,
         weight = this.weight,
@@ -36,8 +38,9 @@ fun Pokemon.toEntity(): PokemonEntity = PokemonEntity(
 )
 
 fun Pokemon.toResponse(): PokemonResponse = PokemonResponse(
-        id = this.id!!, // !! means id will not be null
+        id = this.id!!,
         name = this.name,
+        image = this.image,
         types = this.types.map { type -> type.name },
         height = this.height,
         weight = this.weight,
@@ -57,5 +60,6 @@ fun Pokemon.toResponse(): PokemonResponse = PokemonResponse(
 fun Pokemon.toListResponse(): PokemonListResponse = PokemonListResponse(
         id = this.id!!,
         name = this.name,
+        image = this.image,
         types = this.types.map { type -> type.name }
 )

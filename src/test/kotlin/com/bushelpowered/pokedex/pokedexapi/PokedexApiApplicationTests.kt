@@ -9,5 +9,4 @@ class PokedexApiApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

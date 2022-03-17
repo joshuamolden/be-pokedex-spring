@@ -1,15 +1,9 @@
 package com.bushelpowered.pokedex.pokedexapi.service
 
-import com.bushelpowered.pokedex.pokedexapi.domain.Pokemon
-import com.bushelpowered.pokedex.pokedexapi.domain.Stats
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.AbilityEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.EggGroupEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.TypeEntity
-import com.bushelpowered.pokedex.pokedexapi.persistence.entities.toDomain
+import com.bushelpowered.pokedex.pokedexapi.domain.models.*
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.opencsv.bean.CsvToBean
 import com.opencsv.bean.CsvToBeanBuilder
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -17,19 +11,7 @@ import java.io.BufferedReader
 import java.io.FileReader
 
 @Service
-class CsvService {
-
-    @Autowired
-    lateinit var pokemonService: PokemonService
-
-    @Autowired
-    lateinit var typeService: TypeService
-
-    @Autowired
-    lateinit var abilityService: AbilityService
-
-    @Autowired
-    lateinit var eggGroupService: EggGroupService
+class CsvService(val pokemonService: PokemonService) {
 
     fun importPokemon(objectMapper: ObjectMapper): Boolean {
         val csvFile = BufferedReader(FileReader("src/main/resources/csv/pokedex.csv"))
@@ -41,20 +23,17 @@ class CsvService {
                     .build()
 
             val pokemonEntities = fromCsvToBean.parse()
-//            fun parseStat(statType: String, it: PokemonFromCsv): Int {
-//                return jacksonObjectMapper().readTree(it.["stats"])[statType].toString().toInt()      tyring to figure out how to make helper method for stats
-//            }
-            // takes about 35-40 seconds to add all info to db, is this too much time?
             pokemonEntities.forEach {
                 pokemonService.createPokemon(
                         Pokemon(
                                 id = it.id,
                                 name = it.name ?: "",
-                                types = objectMapper.readTree(it.types).map { type -> TypeEntity(name = type.toString().replace("\"", "")).toDomain() },
+                                image = "https://intern-pokedex.myriadapps.com/images/pokemon/${it.id}.png",
+                                types = objectMapper.readTree(it.types).map { type -> Type(name = type.toString().replace("\"", "")) },
                                 height = it.height ?: 0.0,
                                 weight = it.weight ?: 0.0,
-                                abilities = objectMapper.readTree(it.abilities).map { ability -> AbilityEntity(name = ability.toString().replace("\"", "")).toDomain() },
-                                egg_groups = objectMapper.readTree(it.egg_groups).map { egg_group -> EggGroupEntity(name = egg_group.toString().replace("\"", "")).toDomain() },
+                                abilities = objectMapper.readTree(it.abilities).map { ability -> Ability(name = ability.toString().replace("\"", "")) },
+                                egg_groups = objectMapper.readTree(it.egg_groups).map { egg_group -> EggGroup(name = egg_group.toString().replace("\"", "")) },
                                 stats = Stats(
                                         hp = objectMapper.readTree(it.stats)["hp"].toString().toInt(),
                                         speed = objectMapper.readTree(it.stats)["speed"].toString().toInt(),
@@ -75,7 +54,6 @@ class CsvService {
     }
 
     data class PokemonFromCsv(
-            // values need to be var in order to parse from csv file
             var id: Int? = null,
             var name: String? = null,
             var types: String? = null,
@@ -87,5 +65,3 @@ class CsvService {
             var genus: String? = null,
             var description: String? = null)
 }
-
-// for testing {"name": "test, "email": "test@gmail.com", "password": "testPassword"}

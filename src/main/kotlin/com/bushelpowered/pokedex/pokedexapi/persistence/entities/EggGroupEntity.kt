@@ -1,6 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
-import com.bushelpowered.pokedex.pokedexapi.domain.EggGroup
+import com.bushelpowered.pokedex.pokedexapi.domain.models.EggGroup
 import javax.persistence.*
 
 @Entity

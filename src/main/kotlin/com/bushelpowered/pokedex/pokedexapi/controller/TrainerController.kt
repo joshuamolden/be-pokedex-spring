@@ -2,15 +2,14 @@ package com.bushelpowered.pokedex.pokedexapi.controller
 
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.NewTrainerRequest
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.TrainerLoginRequest
-import com.bushelpowered.pokedex.pokedexapi.domain.dto.requests.toDomain
 import com.bushelpowered.pokedex.pokedexapi.domain.dto.responses.*
 import com.bushelpowered.pokedex.pokedexapi.service.TrainerService
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.*
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
 
@@ -21,7 +20,7 @@ class TrainerController(private val trainerService: TrainerService) {
     @PostMapping("/register")
     fun registerNewTrainer(@RequestBody newTrainer: NewTrainerRequest): ResponseEntity<BaseTrainerResponse> {
         return when (trainerService.findTrainerByEmail(newTrainer.email)) {
-            null -> ResponseEntity.ok(trainerService.addTrainer(newTrainer.toDomain()))
+            null -> ResponseEntity.ok(trainerService.addTrainer(newTrainer))
             else -> ResponseEntity.badRequest().body(TrainerErrorResponse(message = "Email already exists", email = newTrainer.email))
         }
     }
@@ -29,22 +28,12 @@ class TrainerController(private val trainerService: TrainerService) {
     @PostMapping("/login")
     fun login(@RequestBody trainer: TrainerLoginRequest, response: HttpServletResponse): ResponseEntity<BaseTrainerResponse?> {
         val wrongInfoResponse = TrainerLoginError(false, "Invalid email or password", trainer.email, trainer.password)
-
         return when (val trainerLogin = trainerService.findTrainerByEmail(trainer.email)) {
             null -> ResponseEntity.badRequest().body(wrongInfoResponse)
             else -> if (trainerService.comparePassword(trainer)) {
-
-                val issuer = trainer.email
-                val jwt = Jwts.builder()
-                        .setIssuer(issuer)
-                        .setExpiration(Date(System.currentTimeMillis() + TEN_HOURS))
-                        .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact()
-
-                val cookie = Cookie("jwt", jwt)
+                val cookie = trainerService.createJwt(trainer.email)
                 cookie.isHttpOnly = true
-
                 response.addCookie(cookie)
-
                 ResponseEntity.ok(TrainerResponse(true, trainerLogin.name, trainerLogin.email))
             } else ResponseEntity.badRequest().body(wrongInfoResponse)
 
@@ -56,8 +45,7 @@ class TrainerController(private val trainerService: TrainerService) {
         val unauthenticated = TrainerAuthError(message = "unauthenticated trainer")
         try {
             if (jwt == null) return ResponseEntity(unauthenticated, HttpStatus.UNAUTHORIZED)
-            val jwtClaim = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwt).body
-            return ResponseEntity.ok(trainerService.findTrainerByEmail(jwtClaim.issuer))
+            return ResponseEntity.ok(trainerService.findTrainerByEmail(trainerService.jwtParser(jwt)))
         } catch (e: Exception) {
             return ResponseEntity(unauthenticated, HttpStatus.UNAUTHORIZED)
         }
@@ -71,19 +59,26 @@ class TrainerController(private val trainerService: TrainerService) {
         return ResponseEntity(TrainerLogout(message = "Successfully logged out"), HttpStatus.OK)
     }
 
-//    @PostMapping("capture")
-//    fun capturePokemon(@RequestBody pokemonId: CapturePokemonRequest) : ResponseEntity<CapturePokemonResponse> {
-//        val pokemon =
-//    }
+    @PostMapping("/capture/{pokemon_id}")
+    fun capturePokemon(
+            @PathVariable pokemon_id: Int,
+            @CookieValue("jwt") jwt: String?
+    ): ResponseEntity<CapturePokemonResponse> {
+        return when (jwt) {
+            null -> ResponseEntity.badRequest().body(CapturePokemonResponse("You must be signed in to capture pokemon", null))
+            else -> if (pokemon_id > 553) ResponseEntity.badRequest().body(CapturePokemonResponse("Pokemon doesn't exist", null))
+            else ResponseEntity.ok(trainerService.trainerCapturesPokemon(pokemon_id, trainerService.jwtParser(jwt)))
+        }
+    }
 
-    private final val TEN_HOURS = 60 * 10 * 1000
-    private final val SECRET_KEY = "secret"
+    @GetMapping("/captured")
+    fun listCapturedPokemon(
+            @PageableDefault(sort = ["id"], value = 15) pageable: Pageable,
+            @CookieValue("jwt") jwt: String?
+    ): ResponseEntity<Page<PokemonListResponse?>> {
+        return if (jwt.isNullOrBlank()) ResponseEntity.badRequest().body(Page.empty())
+        else {
+            ResponseEntity.ok(trainerService.getAllCapturedPokemon(pageable, trainerService.jwtParser(jwt)))
+        }
+    }
 }
-
-/*
-{
-   "name": "test",
-   "email": "test@gmail.com",
-   "password": "testPassword"
-}
-for testing  */

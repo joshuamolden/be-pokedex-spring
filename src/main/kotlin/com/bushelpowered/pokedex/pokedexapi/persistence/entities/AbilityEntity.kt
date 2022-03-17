@@ -1,6 +1,6 @@
 package com.bushelpowered.pokedex.pokedexapi.persistence.entities
 
-import com.bushelpowered.pokedex.pokedexapi.domain.Ability
+import com.bushelpowered.pokedex.pokedexapi.domain.models.Ability
 import javax.persistence.*
 
 @Entity
